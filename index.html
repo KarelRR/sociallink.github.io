@@ -169,24 +169,24 @@
             font-weight: bold;
         }
 
-        .plan-features {
-            display: none;
-            padding: 0.5rem;
-            background: rgba(255,255,255,0.1);
+        .plan-features-container {
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 8px;
-            margin-top: 0.5rem;
+            margin: 0.5rem 0;
             font-size: 0.75rem;
             text-align: left;
             animation: fadeIn 0.3s ease;
+            display: none;
+        }
+
+        .plan-features-container.active {
+            display: block;
         }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        .plan-features.active {
-            display: block;
         }
 
         .membership-btn {
@@ -525,31 +525,23 @@
                 <div class="pricing-option" data-plan="basic">
                     <div class="price">$250 <span>CUP/MES</span></div>
                     <div class="price-description">Plan Básico</div>
-                    <div class="plan-features">
-                        ✓ Contacta con todos los usuarios
-                    </div>
                 </div>
                 
                 <div class="pricing-option popular" data-plan="annual">
                     <div class="price">$1000 <span>CUP/AÑO</span></div>
                     <div class="price-description">(Ahorra 16%)</div>
                     <div class="popular-badge">POPULAR</div>
-                    <div class="plan-features">
-                        ✓ Contacta con todos los usuarios
-                    </div>
                 </div>
                 
                 <div class="pricing-option vip" data-plan="lifetime">
                     <div class="price">$1800 <span>CUP/DE POR VIDA</span></div>
                     <div class="price-description">Mejor oferta</div>
-                    <div class="plan-features">
-                        ✓ Acceso completo de por vida<br>
-                        ✓ Contacta con todos los usuarios<br>
-                        ✓ Etiqueta VIP y verificación de identidad<br>
-                        ✓ Perfil destacado en búsquedas<br>
-                        ✓ Soporte prioritario
-                    </div>
                 </div>
+            </div>
+            
+            <!-- Contenedor nuevo para las características -->
+            <div class="plan-features-container">
+                <!-- Aquí se inyectará el contenido dinámico -->
             </div>
             
             <a href="https://wa.me/1234567890?text=Estoy%20interesado%20en%20el%20Plan%20Vitalicio%20(1800%20CUP)%20de%20SocialLink%20Premium" class="membership-btn">
@@ -792,22 +784,35 @@
                 });
             }
             
+            // Objeto con las características de cada plan
+            const planFeatures = {
+                basic: "✓ Contacta con todos los usuarios",
+                annual: "✓ Contacta con todos los usuarios",
+                lifetime: `
+                    ✓ Acceso completo de por vida<br>
+                    ✓ Contacta con todos los usuarios<br>
+                    ✓ Etiqueta VIP y verificación de identidad<br>
+                    ✓ Perfil destacado en búsquedas<br>
+                    ✓ Soporte prioritario
+                `
+            };
+            
             // Controlador para mostrar características de los planes
             pricingOptions.forEach(option => {
                 option.addEventListener('click', function() {
                     // Remover activo de todos los planes
-                    pricingOptions.forEach(opt => {
-                        opt.classList.remove('active');
-                        opt.querySelector('.plan-features').classList.remove('active');
-                    });
+                    pricingOptions.forEach(opt => opt.classList.remove('active'));
                     
                     // Activar el plan clickeado
                     this.classList.add('active');
-                    const features = this.querySelector('.plan-features');
-                    features.classList.add('active');
+                    
+                    // Mostrar características en el contenedor
+                    const plan = this.dataset.plan;
+                    const featuresContainer = document.querySelector('.plan-features-container');
+                    featuresContainer.innerHTML = planFeatures[plan];
+                    featuresContainer.classList.add('active');
                     
                     // Actualizar el enlace de WhatsApp con el plan seleccionado
-                    const plan = this.dataset.plan;
                     let planText = '';
                     
                     if (plan === 'basic') {
