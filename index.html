@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -121,11 +121,17 @@
             min-width: 100px;
             position: relative;
             transition: var(--transition);
+            cursor: pointer;
         }
 
         .pricing-option:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .pricing-option.active {
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
         .pricing-option.popular {
@@ -163,21 +169,24 @@
             font-weight: bold;
         }
 
-        .membership-features {
-            list-style: none;
-            margin: 1.2rem 0;
+        .plan-features {
+            display: none;
+            padding: 0.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            text-align: left;
+            animation: fadeIn 0.3s ease;
         }
 
-        .membership-features li {
-            margin-bottom: 0.6rem;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .membership-features i {
-            margin-right: 0.5rem;
-            color: var(--gold);
+        .plan-features.active {
+            display: block;
         }
 
         .membership-btn {
@@ -500,17 +509,11 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<style type="text/css">
-.grande { font-size: 60px; }
-</style>
-<script>
-// Escribir aqui el código Javascript
-</script>
 </head>
 <body>
     <header>
         <h1 class="logo">Social Link</h1>
-        <p class="slogan">Conecta con personas increíbles</p>
+      <p class="slogan">Conecta con personas increíbles sin importar donde vivan</p>
     </header>
 
     <div class="container">
@@ -519,39 +522,43 @@
             <h3 class="membership-title">¡ÚNETE A SOCIALLINK PREMIUM!</h3>
             
             <div class="pricing-options">
-                <div class="pricing-option">
+                <div class="pricing-option" data-plan="basic">
                     <div class="price">$250 <span>CUP/MES</span></div>
                     <div class="price-description">Plan Básico</div>
+                    <div class="plan-features">
+                        ✓ Contacta con todos los usuarios
+                    </div>
                 </div>
                 
-                <div class="pricing-option popular">
+                <div class="pricing-option popular" data-plan="annual">
                     <div class="price">$1000 <span>CUP/AÑO</span></div>
                     <div class="price-description">(Ahorra 16%)</div>
                     <div class="popular-badge">POPULAR</div>
+                    <div class="plan-features">
+                        ✓ Contacta con todos los usuarios
+                    </div>
                 </div>
                 
-                <div class="pricing-option vip">
+                <div class="pricing-option vip" data-plan="lifetime">
                     <div class="price">$1800 <span>CUP/DE POR VIDA</span></div>
                     <div class="price-description">Mejor oferta</div>
+                    <div class="plan-features">
+                        ✓ Acceso completo de por vida<br>
+                        ✓ Contacta con todos los usuarios<br>
+                        ✓ Etiqueta VIP y verificación de identidad<br>
+                        ✓ Perfil destacado en búsquedas<br>
+                        ✓ Soporte prioritario
+                    </div>
                 </div>
             </div>
             
-            <ul class="membership-features">
-                <li><i class="fas fa-check-circle"></i> Acceso completo de por vida</li>
-                <li><i class="fas fa-check-circle"></i> Contacta con todos los usuarios</li>
-                <li><i class="fas fa-check-circle"></i> Etiqueta VIP y verificación de identidad</li>
-                <li><i class="fas fa-check-circle"></i> Perfil destacado en búsquedas</li>
-            </ul>
-            
-            <a href="https://wa.me/1234567890?text=Estoy%20interesado%20en%20SocialLink%20Premium" class="membership-btn">
+            <a href="https://wa.me/1234567890?text=Estoy%20interesado%20en%20el%20Plan%20Vitalicio%20(1800%20CUP)%20de%20SocialLink%20Premium" class="membership-btn">
                 <i class="fab fa-whatsapp"></i> OBTENER MEMBRESÍA
             </a>
             
             <div class="payment-methods">
                 <span>Aceptamos:</span>
-                <i class="fab fa-cc-visa"></i>
-                <i class="fab fa-cc-mastercard"></i>
-                <i class="fas fa-money-bill-wave"></i>
+                Transferencia CUP y Crypto
                 <i class="fab fa-bitcoin"></i>
             </div>
         </div>
@@ -566,20 +573,20 @@
 
         <!-- Filtros por género -->
         <div class="filters">
-            <button class="filter-btn active" data-filter="all" style="transform: scale(0.95);">Todos</button>
-            <button class="filter-btn" data-filter="male" style="transform: scale(1);">Hombres</button>
-            <button class="filter-btn" data-filter="female" style="transform: scale(1);">Mujeres</button>
-            <button class="filter-btn" data-filter="online" style="transform: scale(1);">En línea</button>
-            <button class="filter-btn" data-filter="vip" style="transform: scale(1);">VIP</button>
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="male">Hombres</button>
+            <button class="filter-btn" data-filter="female">Mujeres</button>
+          
+            <button class="filter-btn" data-filter="vip">VIP</button>
         </div>
 
         <!-- Grid de usuarios - 2 columnas en móvil -->
         <div class="users-grid">
             <!-- Usuario 1 - VIP -->
-            <div class="user-card vip-user" data-category="male online vip" style="display: block;">
+            <div class="user-card vip-user" data-category="male online vip">
                 <div class="user-image">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" alt="Carlos" loading="lazy">
-                    <span class="user-status online">En línea</span>
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Carlos" loading="lazy">
+                   <span class="user-status online">NUEVO</span>
                     <div class="vip-badge">VIP</div>
                 </div>
                 <div class="user-info">
@@ -597,10 +604,10 @@
             </div>
 
             <!-- Usuario 2 -->
-            <div class="user-card" data-category="female" style="display: block;">
+            <div class="user-card" data-category="female">
                 <div class="user-image">
-                    <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" alt="Ana" loading="lazy">
-                    <span class="user-status recent">Nueva</span>
+                    <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Ana" loading="lazy">
+                   <span class="user-status online">NUEVO</span>
                 </div>
                 <div class="user-info">
                     <h3 class="user-name">Ana R.</h3>
@@ -617,10 +624,10 @@
             </div>
 
             <!-- Usuario 3 - VIP -->
-            <div class="user-card vip-user" data-category="female online vip" style="display: block;">
+            <div class="user-card vip-user" data-category="female online vip">
                 <div class="user-image">
-                    <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" alt="María" loading="lazy">
-                    <span class="user-status busy">Ocupada</span>
+                    <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="María" loading="lazy">
+                   <span class="user-status online">NUEVO</span>
                     <div class="vip-badge">VIP</div>
                 </div>
                 <div class="user-info">
@@ -638,10 +645,10 @@
             </div>
 
             <!-- Usuario 4 -->
-            <div class="user-card" data-category="male online" style="display: block;">
+            <div class="user-card" data-category="male online">
                 <div class="user-image">
-                    <img src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" alt="Javier" loading="lazy">
-                    <span class="user-status online">En línea</span>
+                    <img src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Javier" loading="lazy">
+                    <span class="user-status online">NUEVO</span>
                 </div>
                 <div class="user-info">
                     <h3 class="user-name">Javier L.</h3>
@@ -658,10 +665,10 @@
             </div>
 
             <!-- Usuario 5 -->
-            <div class="user-card" data-category="female recent" style="display: block;">
+            <div class="user-card" data-category="female recent">
                 <div class="user-image">
-                    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" alt="Lucía" loading="lazy">
-                    <span class="user-status recent">Nueva</span>
+                    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Lucía" loading="lazy">
+                    <span class="user-status online">NUEVO</span>
                 </div>
                 <div class="user-info">
                     <h3 class="user-name">Lucía F.</h3>
@@ -678,10 +685,10 @@
             </div>
 
             <!-- Usuario 6 - VIP -->
-            <div class="user-card vip-user" data-category="male vip" style="display: block;">
+            <div class="user-card vip-user" data-category="male vip">
                 <div class="user-image">
-                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" alt="Diego" loading="lazy">
-                    <span class="user-status offline">Offline</span>
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Diego" loading="lazy">
+                   <span class="user-status online">En línea</span>
                     <div class="vip-badge">VIP</div>
                 </div>
                 <div class="user-info">
@@ -700,7 +707,7 @@
         </div>
 
         <!-- Botón "Ver más" para móviles -->
-        <button class="load-more-btn" style="display: none;">Ver más perfiles</button>
+        <button class="load-more-btn">Ver más perfiles</button>
     </div>
 
     <footer>
@@ -714,6 +721,8 @@
             const userCards = document.querySelectorAll('.user-card');
             const searchInput = document.querySelector('.search-bar input');
             const loadMoreBtn = document.querySelector('.load-more-btn');
+            const pricingOptions = document.querySelectorAll('.pricing-option');
+            const membershipBtn = document.querySelector('.membership-btn');
             
             // Mostrar solo 4 perfiles inicialmente en móvil
             if (window.innerWidth < 600) {
@@ -783,6 +792,39 @@
                 });
             }
             
+            // Controlador para mostrar características de los planes
+            pricingOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remover activo de todos los planes
+                    pricingOptions.forEach(opt => {
+                        opt.classList.remove('active');
+                        opt.querySelector('.plan-features').classList.remove('active');
+                    });
+                    
+                    // Activar el plan clickeado
+                    this.classList.add('active');
+                    const features = this.querySelector('.plan-features');
+                    features.classList.add('active');
+                    
+                    // Actualizar el enlace de WhatsApp con el plan seleccionado
+                    const plan = this.dataset.plan;
+                    let planText = '';
+                    
+                    if (plan === 'basic') {
+                        planText = 'Plan%20Básico%20(250%20CUP/mes)';
+                    } else if (plan === 'annual') {
+                        planText = 'Plan%20Anual%20(1000%20CUP/año)';
+                    } else {
+                        planText = 'Plan%20Vitalicio%20(1800%20CUP)';
+                    }
+                    
+                    membershipBtn.href = `https://wa.me/1234567890?text=Estoy%20interesado%20en%20el%20${planText}%20de%20SocialLink%20Premium`;
+                });
+            });
+            
+            // Activar el plan vitalicio por defecto
+            document.querySelector('.pricing-option[data-plan="lifetime"]').click();
+            
             // Efecto táctil mejorado
             const buttons = document.querySelectorAll('button, a');
             buttons.forEach(button => {
@@ -805,6 +847,5 @@
             });
         });
     </script>
-
-
-</body></html>
+</body>
+</html>
