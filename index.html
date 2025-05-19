@@ -111,6 +111,12 @@
             height: 100%;
         }
         
+        .counter-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
         .counter {
             font-size: 3rem;
             font-weight: bold;
@@ -121,9 +127,29 @@
             text-align: center;
         }
         
-        .light-mode .counter {
+        .counter-ton {
+            font-size: 1.5rem;
+            color: #00ff9d;
+            margin-top: 10px;
+        }
+        
+        .light-mode .counter,
+        .light-mode .counter-ton {
             color: #0088cc;
             text-shadow: 0 0 15px rgba(0, 136, 204, 0.3);
+        }
+        
+        .ton-logo-animation {
+            width: 40px;
+            height: 40px;
+            background: url('https://cryptologos.cc/logos/toncoin-ton-logo.png') center/contain no-repeat;
+            animation: ton-pulse 2s infinite ease-in-out;
+            filter: drop-shadow(0 0 10px rgba(0, 255, 157, 0.6));
+        }
+        
+        @keyframes ton-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
         
         .mining-animation-container {
@@ -440,7 +466,7 @@
         .machines-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 15px;
             width: 100%;
             max-width: 450px;
             margin: 0 auto;
@@ -448,16 +474,16 @@
         
         .machine-card {
             background: #1a1c23;
-            padding: 25px 20px;
-            border-radius: 15px;
+            padding: 15px;
+            border-radius: 12px;
             text-align: center;
             transition: all 0.3s;
             border: 1px solid #2d2f3a;
         }
         
         .machine-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
         
         .light-mode .machine-card {
@@ -466,15 +492,15 @@
         }
         
         .machine-name {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
             color: #0088cc;
             font-weight: bold;
         }
         
         .machine-profit {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
             color: #00ff9d;
             font-weight: bold;
         }
@@ -484,8 +510,8 @@
         }
         
         .machine-price {
-            font-size: 1rem;
-            margin-bottom: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
             color: #a0a0a0;
         }
         
@@ -497,10 +523,10 @@
             background: linear-gradient(135deg, #0088cc, #00c781);
             color: white;
             border: none;
-            padding: 12px 15px;
-            border-radius: 10px;
+            padding: 10px;
+            border-radius: 8px;
             width: 100%;
-            font-size: 1rem;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.3s;
             font-weight: bold;
@@ -508,7 +534,7 @@
         
         .machine-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 199, 129, 0.4);
+            box-shadow: 0 5px 10px rgba(0, 199, 129, 0.3);
         }
         
         .machine-btn:disabled {
@@ -659,13 +685,8 @@
                 min-width: 220px;
             }
             
-            .machines-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            
             .machine-card {
-                padding: 20px 15px;
+                padding: 12px;
             }
             
             .nav-item {
@@ -699,7 +720,11 @@
     <div class="content">
         <!-- Home Section -->
         <div id="home-section" class="section-container">
-            <div class="counter" id="ton-counter">0.000000</div>
+            <div class="counter-container">
+                <div class="counter" id="ton-counter">0.000000</div>
+                <div class="ton-logo-animation"></div>
+                <span class="counter-ton">TON</span>
+            </div>
             <div class="mining-animation-container">
                 <div class="mining-animation"></div>
             </div>
