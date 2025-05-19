@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Toncoin Investment</title>
+    <title>TON MINE</title>
     <style>
         * {
             margin: 0;
@@ -113,43 +113,38 @@
         
         .counter-container {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 5px;
         }
         
         .counter {
             font-size: 3rem;
             font-weight: bold;
-            margin: 20px 0;
+            margin: 10px 0 5px 0;
             font-family: 'Courier New', monospace;
             color: #00ff9d;
             text-shadow: 0 0 15px rgba(0, 255, 157, 0.4);
             text-align: center;
         }
         
+        .ton-logo-below {
+            width: 50px;
+            height: 50px;
+            background: url('https://i.postimg.cc/g0LKh9PX/7138701.webp') center/contain no-repeat;
+            filter: drop-shadow(0 0 10px rgba(0, 255, 157, 0.6));
+        }
+        
         .counter-ton {
             font-size: 1.5rem;
             color: #00ff9d;
-            margin-top: 10px;
+            margin-top: 5px;
         }
         
         .light-mode .counter,
         .light-mode .counter-ton {
             color: #0088cc;
             text-shadow: 0 0 15px rgba(0, 136, 204, 0.3);
-        }
-        
-        .ton-logo-animation {
-            width: 40px;
-            height: 40px;
-            background: url('https://cryptologos.cc/logos/toncoin-ton-logo.png') center/contain no-repeat;
-            animation: ton-pulse 2s infinite ease-in-out;
-            filter: drop-shadow(0 0 10px rgba(0, 255, 157, 0.6));
-        }
-        
-        @keyframes ton-pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
         }
         
         .mining-animation-container {
@@ -705,30 +700,12 @@
             width: 100%;
             height: 100%;
         }
-      
-      
-       .ton-animation {
-            width: 100px;
-            height: 100px;
-            margin-bottom: 30px;
-            animation: spin 3s linear infinite, vibrate 0.5s ease-in-out infinite alternate;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        @keyframes vibrate {
-            0% { transform: translateX(-2px); }
-            100% { transform: translateX(2px); }
-        }
-        
     </style>
-    <link rel="stylesheet" href="https://ton.org/download/ton_symbol.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="header">
-        <span>Toncoin Investment</span>
+        <span>TON MINE</span>
         <label class="theme-switch">
             <input type="checkbox" id="theme-toggle">
             <span class="slider"></span>
@@ -740,9 +717,8 @@
         <div id="home-section" class="section-container">
             <div class="counter-container">
                 <div class="counter" id="ton-counter">0.000000</div>
-              
-            <img src="https://i.postimg.cc/g0LKh9PX/7138701.webp" alt="Toncoin" class="ton-animation"> 
-                <span class="counter-ton">TON</span>
+                <div class="ton-logo-below"></div>
+                <span class="counter-ton">TONCOIN</span>
             </div>
             <div class="mining-animation-container">
                 <div class="mining-animation"></div>
