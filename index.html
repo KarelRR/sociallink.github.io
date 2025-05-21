@@ -568,8 +568,7 @@
                 grid-template-columns: 1fr;
             }
         }
-      
-      .modal {
+       .modal {
             display: none;
             position: fixed;
             top: 0;
@@ -718,7 +717,6 @@
             color: var(--success);
             margin-bottom: 15px;
         }
-
     </style>
 </head>
 <body>
@@ -1161,7 +1159,7 @@
                     </div>
                 </div>
                 
-                                <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">
+                             <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">
                     <i class="fas fa-shopping-cart"></i> Ordenar ahora
                 </button>
             </div>
@@ -1178,13 +1176,37 @@
                 </div>
             </div>
             
-            
+            <div class="support-form">
+                <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <input type="text" id="name" class="form-control" placeholder="Tu nombre">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Correo electrónico</label>
+                    <input type="email" id="email" class="form-control" placeholder="tu@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject">Asunto</label>
+                    <select id="subject" class="form-control">
+                        <option value="">Selecciona un tema</option>
+                        <option value="order">Consulta sobre pedido</option>
+                        <option value="service">Consulta sobre servicio</option>
+                        <option value="technical">Problema técnico</option>
+                        <option value="other">Otro</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Mensaje</label>
+                    <textarea id="message" class="form-control" placeholder="Describe tu consulta aquí..."></textarea>
+                </div>
                 
                 <button class="btn btn-primary" style="width: 100%;">
                     <i class="fas fa-paper-plane"></i> Enviar mensaje
                 </button>
             </div>
-          
             
             <div class="card" style="margin-top: 20px;">
                 <h3 class="card-title"><i class="fas fa-info-circle"></i> Información de contacto</h3>
@@ -1328,8 +1350,84 @@
         document.addEventListener('DOMContentLoaded', function() {
             showSection('inicio');
         });
-      
-      // Datos de wallets para cada criptomoneda
+    </script>
+  <!-- Modal de pago con criptomonedas -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Pago con Criptomonedas</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <div id="paymentForm">
+                <div class="payment-info">
+                    <p>Por favor envía el monto exacto en la criptomoneda seleccionada:</p>
+                    <div class="payment-amount" id="paymentAmount">$0.00</div>
+                </div>
+                
+                <h4>Selecciona una criptomoneda:</h4>
+                <div class="crypto-options">
+                    <div class="crypto-option active" data-crypto="USDT" data-network="TRC20">
+                        <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt="USDT" class="crypto-icon">
+                        <span>USDT (TRC20)</span>
+                    </div>
+                    <div class="crypto-option" data-crypto="TRX">
+                        <img src="https://cryptologos.cc/logos/tron-trx-logo.png" alt="TRX" class="crypto-icon">
+                        <span>TRON</span>
+                    </div>
+                    <div class="crypto-option" data-crypto="BNB">
+                        <img src="https://cryptologos.cc/logos/bnb-bnb-logo.png" alt="BNB" class="crypto-icon">
+                        <span>BNB</span>
+                    </div>
+                    <div class="crypto-option" data-crypto="BTC">
+                        <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="BTC" class="crypto-icon">
+                        <span>Bitcoin</span>
+                    </div>
+                    <div class="crypto-option" data-crypto="LTC">
+                        <img src="https://cryptologos.cc/logos/litecoin-ltc-logo.png" alt="LTC" class="crypto-icon">
+                        <span>Litecoin</span>
+                    </div>
+                    <div class="crypto-option" data-crypto="SOL">
+                        <img src="https://cryptologos.cc/logos/solana-sol-logo.png" alt="SOL" class="crypto-icon">
+                        <span>Solana</span>
+                    </div>
+                    <div class="crypto-option" data-crypto="TON">
+                        <img src="https://cryptologos.cc/logos/toncoin-ton-logo.png" alt="TON" class="crypto-icon">
+                        <span>Toncoin</span>
+                    </div>
+                </div>
+                
+                <div class="wallet-container">
+                    <h4>Dirección de wallet:</h4>
+                    <div class="wallet-address" id="walletAddress">TXYZ1234567890abcdefghijk</div>
+                    <button class="copy-wallet" id="copyWallet">
+                        <i class="fas fa-copy"></i> Copiar
+                    </button>
+                    <p class="small-text">Envía exactamente el monto mostrado a esta dirección</p>
+                </div>
+                
+                <div class="payment-actions">
+                    <button class="btn btn-cancel" id="cancelPayment">Cancelar</button>
+                    <button class="btn btn-primary" id="completePayment">Pago Completado</button>
+                </div>
+            </div>
+            
+            <div id="successMessage" class="success-message">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>¡Gracias por tu pago!</h3>
+                <p>Por favor dirígete al botón "Verificar pedido" en nuestro bot de soporte para completar tu orden.</p>
+                <button class="btn btn-primary" id="closeModal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Todas las funciones anteriores permanecen igual
+        // Agrego las nuevas funciones para el modal de pago
+
+        // Datos de wallets para cada criptomoneda
         const cryptoWallets = {
             'USDT': 'TXYZ1234567890abcdefghijk',
             'TRX': 'TXYZ9876543210zyxwvutsrq',
@@ -1419,79 +1517,6 @@
         document.querySelector('.close-modal').addEventListener('click', closePaymentModal);
 
         // Resto del código JavaScript anterior permanece igual
-    
     </script>
-  
-   <div id="paymentModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Pago con Criptomonedas</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            
-            <div id="paymentForm">
-                <div class="payment-info">
-                    <p>Por favor envía el monto exacto en la criptomoneda seleccionada:</p>
-                    <div class="payment-amount" id="paymentAmount">$0.00</div>
-                </div>
-                
-                <h4>Selecciona una criptomoneda:</h4>
-                <div class="crypto-options">
-                    <div class="crypto-option active" data-crypto="USDT" data-network="TRC20">
-                        <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt="USDT" class="crypto-icon">
-                        <span>USDT (TRC20)</span>
-                    </div>
-                    <div class="crypto-option" data-crypto="TRX">
-                        <img src="https://cryptologos.cc/logos/tron-trx-logo.png" alt="TRX" class="crypto-icon">
-                        <span>TRON</span>
-                    </div>
-                    <div class="crypto-option" data-crypto="BNB">
-                        <img src="https://cryptologos.cc/logos/bnb-bnb-logo.png" alt="BNB" class="crypto-icon">
-                        <span>BNB</span>
-                    </div>
-                    <div class="crypto-option" data-crypto="BTC">
-                        <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="BTC" class="crypto-icon">
-                        <span>Bitcoin</span>
-                    </div>
-                    <div class="crypto-option" data-crypto="LTC">
-                        <img src="https://cryptologos.cc/logos/litecoin-ltc-logo.png" alt="LTC" class="crypto-icon">
-                        <span>Litecoin</span>
-                    </div>
-                    <div class="crypto-option" data-crypto="SOL">
-                        <img src="https://cryptologos.cc/logos/solana-sol-logo.png" alt="SOL" class="crypto-icon">
-                        <span>Solana</span>
-                    </div>
-                    <div class="crypto-option" data-crypto="TON">
-                        <img src="https://cryptologos.cc/logos/toncoin-ton-logo.png" alt="TON" class="crypto-icon">
-                        <span>Toncoin</span>
-                    </div>
-                </div>
-                
-                <div class="wallet-container">
-                    <h4>Dirección de wallet:</h4>
-                    <div class="wallet-address" id="walletAddress">TXYZ1234567890abcdefghijk</div>
-                    <button class="copy-wallet" id="copyWallet">
-                        <i class="fas fa-copy"></i> Copiar
-                    </button>
-                    <p class="small-text">Envía exactamente el monto mostrado a esta dirección</p>
-                </div>
-                
-                <div class="payment-actions">
-                    <button class="btn btn-cancel" id="cancelPayment">Cancelar</button>
-                    <button class="btn btn-primary" id="completePayment">Pago Completado</button>
-                </div>
-            </div>
-            
-            <div id="successMessage" class="success-message">
-                <div class="success-icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <h3>¡Gracias por tu pago!</h3>
-                <p>Por favor dirígete al botón "Verificar pedido" en nuestro bot de soporte para completar tu orden.</p>
-                <button class="btn btn-primary" id="closeModal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-
 </body>
 </html>
