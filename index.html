@@ -3,70 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TON Spin</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>SocialBoost - Incrementa tu presencia en redes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #6C5CE7;
-            --primary-dark: #5649C0;
-            --secondary: #00CEFF;
-            --accent: #FF7675;
-            --dark: #2D3436;
-            --light: #F5F6FA;
-            --success: #00B894;
-            --warning: #FDCB6E;
-            --danger: #D63031;
-            --bg-gradient: linear-gradient(135deg, #6C5CE7 0%, #00CEFF 100%);
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --dark: #1b263b;
+            --light: #f8f9fa;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #f8961e;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            background-color: var(--dark);
-            color: var(--light);
-            max-width: 100%;
+            background-color: #f5f7fa;
+            color: var(--dark);
             overflow-x: hidden;
-            min-height: 100vh;
-            padding-bottom: 80px;
+            padding-bottom: 70px;
         }
-        
+
         .container {
-            padding: 20px;
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
+            max-width: 100%;
+            padding: 0 15px;
         }
-        
-        .section {
-            background-color: rgba(45, 52, 54, 0.8);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-        }
-        
-        .section-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: var(--light);
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             position: relative;
-            padding-bottom: 10px;
+            overflow: hidden;
         }
-        
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Q50,80 0,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: 100% 100%;
+            opacity: 0.3;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .slogan {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        .nav-bottom {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--dark);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 10px;
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 3px;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .nav-item:hover {
+            color: var(--primary);
+        }
+
+        .section {
+            padding: 20px 0;
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+            position: relative;
+            padding-bottom: 5px;
+        }
+
         .section-title::after {
             content: '';
             position: absolute;
@@ -74,1175 +139,1044 @@
             left: 0;
             width: 50px;
             height: 3px;
-            background: var(--bg-gradient);
+            background: linear-gradient(to right, var(--primary), var(--accent));
             border-radius: 3px;
         }
-        
-        /* Spin Section */
-        .balance-display {
-            background: rgba(108, 92, 231, 0.2);
+
+        .card {
+            background: white;
+            border-radius: 10px;
             padding: 15px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            text-align: center;
-            font-size: 16px;
-            font-weight: 500;
-            border: 1px solid rgba(108, 92, 231, 0.3);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
-        
-        .balance-display span {
-            font-weight: 700;
-            color: var(--secondary);
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
         }
-        
-        .wheel-container {
-            position: relative;
-            width: 100%;
-            max-width: 320px;
-            height: 320px;
-            margin: 0 auto 30px;
-            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
-        }
-        
-        .wheel {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            position: relative;
-            overflow: hidden;
-            border: 10px solid var(--dark);
-            box-shadow: 0 0 0 5px rgba(108, 92, 231, 0.5),
-                        inset 0 0 0 5px rgba(108, 92, 231, 0.5);
-            transition: transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
-            transform: rotate(0deg);
-            background: var(--primary);
-        }
-        
-        .wheel-item {
-            position: absolute;
-            width: 50%;
-            height: 50%;
-            transform-origin: bottom right;
+
+        .card-title {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--primary);
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 14px;
-            color: var(--light);
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-            clip-path: polygon(0 0, 100% 0, 100% 100%);
         }
-        
-        .wheel-item span {
-            transform: rotate(45deg);
-            transform-origin: center;
-            padding-left: 40px;
-            padding-bottom: 40px;
-            text-align: center;
-            width: 80px;
+
+        .card-title i {
+            margin-right: 10px;
+            color: var(--accent);
         }
-        
-        .wheel-pointer {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 40px;
-            z-index: 10;
-            filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.3));
+
+        .card-content {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.5;
         }
-        
-        .wheel-pointer::before {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-top: 40px solid var(--accent);
-        }
-        
-        .spin-button {
-            background: var(--bg-gradient);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 30px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            display: block;
-            margin: 0 auto;
-            width: 180px;
-            text-align: center;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .spin-button::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 200%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.1);
-            transform: rotate(30deg);
-            transition: all 0.3s;
-        }
-        
-        .spin-button:hover::after {
-            left: 100%;
-        }
-        
-        .spin-button:disabled {
-            background: var(--dark);
-            color: #666;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-        
-        .spin-button:disabled::after {
-            display: none;
-        }
-        
-        /* Tickets Section */
-        .ticket-options {
-            display: flex;
-            flex-direction: column;
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 15px;
+            margin-top: 20px;
         }
-        
-        .ticket-option {
-            background: rgba(45, 52, 54, 0.6);
+
+        .service-item {
+            background: white;
+            border-radius: 10px;
             padding: 15px;
-            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .service-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .service-item i {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .service-item:hover i {
+            color: white;
+        }
+
+        .service-item h3 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .service-item p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .service-item:hover p {
+            opacity: 0.9;
+        }
+
+        .package-list {
+            margin-top: 20px;
+        }
+
+        .package-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid rgba(108, 92, 231, 0.3);
-            transition: all 0.3s;
+            padding: 12px 15px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--accent);
         }
-        
-        .ticket-option:hover {
+
+        .package-item:hover {
             transform: translateX(5px);
-            border-color: var(--primary);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
         }
-        
-        .ticket-option span {
-            font-weight: 500;
+
+        .package-info {
+            display: flex;
+            align-items: center;
         }
-        
-        .ticket-option .price {
-            color: var(--secondary);
+
+        .package-info i {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-right: 10px;
+        }
+
+        .package-quantity {
             font-weight: 600;
         }
-        
-        .ticket-option button {
-            background: var(--bg-gradient);
-            color: white;
-            border: none;
+
+        .package-price {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .btn {
             padding: 8px 15px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 500;
+            border-radius: 5px;
+            border: none;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 3px 10px rgba(108, 92, 231, 0.3);
-        }
-        
-        .ticket-option button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
-        }
-        
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            justify-content: center;
+            transition: all 0.3s ease;
+            display: inline-flex;
             align-items: center;
-            backdrop-filter: blur(5px);
-            animation: fadeIn 0.3s;
+            justify-content: center;
         }
-        
+
+        .btn i {
+            margin-right: 5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .support-form {
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+            outline: none;
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.9), rgba(63, 55, 201, 0.9));
+            color: white;
+            padding: 30px 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 15s linear infinite;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .hero-text {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 10px;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        
-        .modal-content {
-            background: var(--dark);
-            padding: 25px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(108, 92, 231, 0.3);
-            transform: scale(0.9);
-            animation: modalOpen 0.3s forwards;
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        
-        @keyframes modalOpen {
-            to { transform: scale(1); }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
-        
-        .modal-title {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: var(--light);
-            font-weight: 600;
+
+        .pulse {
+            animation: pulse 2s infinite;
         }
-        
-        .modal-info {
-            margin-bottom: 20px;
-            font-size: 15px;
-            color: #ccc;
-            line-height: 1.5;
-        }
-        
-        .modal-info span {
-            color: var(--secondary);
-            font-weight: 600;
-        }
-        
-        .modal-wallet {
-            background: rgba(108, 92, 231, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-family: monospace;
-            word-break: break-all;
-            text-align: center;
-            border: 1px dashed rgba(108, 92, 231, 0.5);
-            position: relative;
-        }
-        
-        .copy-wallet {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: rgba(108, 92, 231, 0.3);
-            border: none;
-            color: var(--light);
-            width: 25px;
-            height: 25px;
-            border-radius: 5px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-        }
-        
-        .modal-input {
-            width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            border: 1px solid #444;
-            background: rgba(45, 52, 54, 0.8);
-            color: white;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-        
-        .modal-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.3);
-        }
-        
-        .modal-buttons {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-        }
-        
-        .modal-button {
-            padding: 12px 20px;
-            border-radius: 10px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            flex: 1;
-            transition: all 0.3s;
-        }
-        
-        .confirm-button {
-            background: var(--success);
-            color: white;
-        }
-        
-        .confirm-button:hover {
-            background: #00a884;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 184, 148, 0.4);
-        }
-        
-        .cancel-button {
-            background: var(--danger);
-            color: white;
-        }
-        
-        .cancel-button:hover {
-            background: #c53030;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(214, 48, 49, 0.4);
-        }
-        
-        /* Redeem Section */
-        .redeem-container {
-            margin-top: 25px;
-        }
-        
-        .redeem-input {
-            display: flex;
-            margin-bottom: 15px;
-            height: 50px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .redeem-input input {
-            flex: 1;
-            padding: 0 15px;
-            border: none;
-            background: rgba(45, 52, 54, 0.8);
-            color: white;
-            font-size: 14px;
-            outline: none;
-        }
-        
-        .redeem-input button {
-            background: var(--bg-gradient);
-            color: white;
-            border: none;
-            padding: 0 20px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .redeem-input button:hover {
-            filter: brightness(1.1);
-        }
-        
-        .redeem-message {
-            font-size: 14px;
-            text-align: center;
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 10px;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.3s;
-        }
-        
-        .redeem-message.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .redeem-message.success {
-            background: rgba(0, 184, 148, 0.2);
-            color: var(--success);
-        }
-        
-        .redeem-message.error {
-            background: rgba(214, 48, 49, 0.2);
-            color: var(--danger);
-        }
-        
-        /* Referral Section */
-        .referral-info {
-            font-size: 15px;
-            color: #ccc;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-        
-        .referral-link-container {
-            position: relative;
-            margin-bottom: 20px;
-        }
-        
-        .referral-link {
-            background: rgba(108, 92, 231, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 14px;
-            word-break: break-all;
-            border: 1px dashed rgba(108, 92, 231, 0.5);
-        }
-        
-        .copy-button {
-            background: var(--bg-gradient);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            display: block;
-            width: 100%;
-            margin-top: 15px;
-            transition: all 0.3s;
-        }
-        
-        .copy-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
-        }
-        
-        /* Navigation */
-        .tab-navigation {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: var(--dark);
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
-            z-index: 100;
-        }
-        
-        .tab-button {
-            background: none;
-            border: none;
-            color: #666;
-            font-size: 12px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.3s;
-            padding: 5px 10px;
-            border-radius: 10px;
-        }
-        
-        .tab-button.active {
-            color: var(--primary);
-            transform: translateY(-5px);
-        }
-        
-        .tab-button.active .tab-icon {
-            background: var(--bg-gradient);
-            color: white;
-            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
-        }
-        
-        .tab-icon {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            font-size: 20px;
-            background: rgba(108, 92, 231, 0.1);
-            transition: all 0.3s;
-        }
-        
-        /* Animations */
+
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
-        
-        .pulse {
-            animation: pulse 2s infinite;
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
         }
-        
-        /* Confetti effect */
-        .confetti {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background-color: var(--accent);
-            opacity: 0;
-            z-index: 999;
-            animation: confetti 5s ease-in-out;
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
-        
-        @keyframes confetti {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(1000px) rotate(720deg);
-                opacity: 0;
-            }
+
+        .social-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
         }
-        
-        /* Responsive */
-        @media (max-width: 400px) {
-            .wheel-container {
-                width: 280px;
-                height: 280px;
+
+        .social-tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            position: relative;
+        }
+
+        .social-tab.active {
+            color: var(--primary);
+        }
+
+        .social-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px 3px 0 0;
+        }
+
+        .social-content {
+            display: none;
+        }
+
+        .social-content.active {
+            display: block;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 5px;
+        }
+
+        .badge-hot {
+            background: var(--danger);
+            color: white;
+        }
+
+        .badge-new {
+            background: var(--success);
+            color: white;
+        }
+
+        .badge-popular {
+            background: var(--warning);
+            color: white;
+        }
+
+        .testimonials {
+            margin-top: 30px;
+        }
+
+        .testimonial-item {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .testimonial-item::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 3rem;
+            color: rgba(67, 97, 238, 0.1);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .testimonial-content {
+            padding-left: 30px;
+            margin-bottom: 10px;
+            font-style: italic;
+            color: #555;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .testimonial-author img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+
+        .testimonial-rating {
+            color: var(--warning);
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 576px) {
+            .service-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             }
             
-            .section-title {
-                font-size: 18px;
+            .hero-title {
+                font-size: 1.4rem;
             }
             
-            .balance-display {
-                flex-direction: column;
-                gap: 5px;
+            .stats {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
+    <header class="pulse">
+        <div class="container">
+            <h1 class="logo">SocialBoost</h1>
+            <p class="slogan">Impulsa tu presencia en redes sociales</p>
+        </div>
+    </header>
+
     <div class="container">
-        <!-- Spin Section -->
-        <div id="spin-section" class="section">
-            <div class="section-title">TON Spin</div>
-            <div class="balance-display">
-                <div>Balance: <span id="balance">0</span> TON</div>
-                <div>Tickets: <span id="tickets">0</span></div>
+        <!-- Sección Inicio -->
+        <section id="inicio" class="section active">
+            <div class="hero floating">
+                <div class="hero-content">
+                    <h2 class="hero-title">Más seguidores, más influencia</h2>
+                    <p class="hero-text">Consigue el engagement que tu marca necesita con nuestros servicios premium</p>
+                    <button class="btn btn-outline">
+                        <i class="fas fa-rocket"></i> Comenzar ahora
+                    </button>
+                </div>
             </div>
-            <div class="wheel-container">
-                <div class="wheel" id="wheel">
-                    <!-- Wheel segments will be added by JavaScript -->
+
+            <h2 class="section-title">Nuestros Servicios</h2>
+            
+            <div class="service-grid">
+                <div class="service-item" onclick="showSection('servicios')">
+                    <i class="fab fa-facebook-f"></i>
+                    <h3>Facebook</h3>
+                    <p>Seguidores y likes</p>
                 </div>
-                <div class="wheel-pointer"></div>
+                <div class="service-item" onclick="showSection('servicios')">
+                    <i class="fab fa-instagram"></i>
+                    <h3>Instagram</h3>
+                    <p>Seguidores y likes</p>
+                </div>
+                <div class="service-item" onclick="showSection('servicios')">
+                    <i class="fas fa-users"></i>
+                    <h3>Grupos FB</h3>
+                    <p>Miembros activos</p>
+                </div>
+                <div class="service-item" onclick="showSection('servicios')">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Crecimiento</h3>
+                    <p>Estrategias</p>
+                </div>
             </div>
-            <button id="spin-button" class="spin-button" disabled>Girar</button>
-        </div>
-        
-        <!-- Tickets Section -->
-        <div id="tickets-section" class="section" style="display: none;">
-            <div class="section-title">Comprar Tickets</div>
-            <div class="ticket-options">
-                <div class="ticket-option">
-                    <div>
-                        <div>1 Ticket</div>
-                        <div class="price">0.1 TON</div>
-                    </div>
-                    <button onclick="showPurchaseModal(1, 0.1)">Comprar</button>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">10K+</div>
+                    <div class="stat-label">Clientes</div>
                 </div>
-                <div class="ticket-option">
-                    <div>
-                        <div>5 Tickets</div>
-                        <div class="price">0.45 TON (10% OFF)</div>
-                    </div>
-                    <button onclick="showPurchaseModal(5, 0.45)">Comprar</button>
+                <div class="stat-item">
+                    <div class="stat-number">5M+</div>
+                    <div class="stat-label">Seguidores</div>
                 </div>
-                <div class="ticket-option">
-                    <div>
-                        <div>10 Tickets</div>
-                        <div class="price">0.8 TON (20% OFF)</div>
-                    </div>
-                    <button onclick="showPurchaseModal(10, 0.8)">Comprar</button>
+                <div class="stat-item">
+                    <div class="stat-number">99%</div>
+                    <div class="stat-label">Satisfacción</div>
                 </div>
-                <div class="ticket-option">
-                    <div>
-                        <div>25 Tickets</div>
-                        <div class="price">1.75 TON (30% OFF)</div>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 30px;">Testimonios</h2>
+            
+            <div class="testimonials">
+                <div class="testimonial-item">
+                    <div class="testimonial-content">
+                        Increíble servicio! En menos de 24 horas ya tenía los 1000 seguidores que pedí. Definitivamente los recomiendo.
                     </div>
-                    <button onclick="showPurchaseModal(25, 1.75)">Comprar</button>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Usuario">
+                        <span>María G.</span>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
                 </div>
-                <div class="ticket-option">
-                    <div>
-                        <div>100 Tickets</div>
-                        <div class="price">6 TON (40% OFF)</div>
+                
+                <div class="testimonial-item">
+                    <div class="testimonial-content">
+                        Necesitaba miembros para mi grupo de Facebook y SocialBoost me ayudó a llegar a 5000 miembros reales en solo una semana. Excelente!
                     </div>
-                    <button onclick="showPurchaseModal(100, 6)">Comprar</button>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Usuario">
+                        <span>Carlos R.</span>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Servicios -->
+        <section id="servicios" class="section">
+            <h2 class="section-title">Nuestros Servicios</h2>
+            
+            <div class="card">
+                <h3 class="card-title"><i class="fab fa-facebook-f"></i> Facebook</h3>
+                <div class="card-content">
+                    Aumenta tu presencia en Facebook con seguidores reales, likes en tus publicaciones y miembros para tus grupos. Ideal para marcas, influencers y negocios.
+                </div>
+                <button class="btn btn-primary" style="margin-top: 10px;" onclick="showSection('facebook')">
+                    Ver paquetes <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title"><i class="fab fa-instagram"></i> Instagram</h3>
+                <div class="card-content">
+                    Impulsa tu perfil de Instagram con seguidores reales y likes automáticos en tus fotos. Mejora tu credibilidad y alcance orgánico.
+                </div>
+                <button class="btn btn-primary" style="margin-top: 10px;" onclick="showSection('instagram')">
+                    Ver paquetes <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-users"></i> Miembros para Grupos</h3>
+                <div class="card-content">
+                    Haz crecer tu grupo de Facebook con miembros reales y activos. Perfecto para comunidades, negocios locales y grupos de interés.
+                </div>
+                <button class="btn btn-primary" style="margin-top: 10px;" onclick="showSection('facebook')">
+                    Ver paquetes <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-chart-line"></i> Servicios Premium</h3>
+                <div class="card-content">
+                    Ofrecemos estrategias personalizadas de crecimiento, gestión de comunidades y contenido para maximizar tu presencia en redes sociales.
+                </div>
+                <button class="btn btn-outline" style="margin-top: 10px;" onclick="showSection('soporte')">
+                    Contactar <i class="fas fa-envelope"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Sección Facebook -->
+        <section id="facebook" class="section">
+            <div class="social-tabs">
+                <div class="social-tab active" onclick="changeTab('fb-followers')">Seguidores</div>
+                <div class="social-tab" onclick="changeTab('fb-likes')">Likes</div>
+                <div class="social-tab" onclick="changeTab('fb-members')">Miembros Grupos</div>
+            </div>
+            
+            <div id="fb-followers" class="social-content active">
+                <h3 class="section-title">Seguidores para Facebook</h3>
+                <p style="margin-bottom: 15px; color: #666;">Aumenta tu audiencia con seguidores reales para tu página de Facebook.</p>
+                
+                <div class="package-list">
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-user-plus"></i>
+                            <span class="package-quantity">50 seguidores</span>
+                        </div>
+                        <span class="package-price">$4.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-user-plus"></i>
+                            <span class="package-quantity">100 seguidores</span>
+                        </div>
+                        <span class="package-price">$8.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-user-plus"></i>
+                            <span class="package-quantity">200 seguidores <span class="badge badge-hot">POPULAR</span></span>
+                        </div>
+                        <span class="package-price">$15.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-user-plus"></i>
+                            <span class="package-quantity">500 seguidores</span>
+                        </div>
+                        <span class="package-price">$34.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-user-plus"></i>
+                            <span class="package-quantity">1000 seguidores</span>
+                        </div>
+                        <span class="package-price">$59.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-user-plus"></i>
+                            <span class="package-quantity">5000 seguidores</span>
+                        </div>
+                        <span class="package-price">$249.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-user-plus"></i>
+                            <span class="package-quantity">10000 seguidores</span>
+                        </div>
+                        <span class="package-price">$449.99</span>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">
+                    <i class="fas fa-shopping-cart"></i> Ordenar ahora
+                </button>
+            </div>
+            
+            <div id="fb-likes" class="social-content">
+                <h3 class="section-title">Likes para Facebook</h3>
+                <p style="margin-bottom: 15px; color: #666;">Aumenta el engagement de tus publicaciones con likes reales.</p>
+                
+                <div class="package-list">
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-thumbs-up"></i>
+                            <span class="package-quantity">50 likes</span>
+                        </div>
+                        <span class="package-price">$3.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-thumbs-up"></i>
+                            <span class="package-quantity">100 likes</span>
+                        </div>
+                        <span class="package-price">$6.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-thumbs-up"></i>
+                            <span class="package-quantity">200 likes <span class="badge badge-hot">POPULAR</span></span>
+                        </div>
+                        <span class="package-price">$11.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-thumbs-up"></i>
+                            <span class="package-quantity">500 likes</span>
+                        </div>
+                        <span class="package-price">$24.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-thumbs-up"></i>
+                            <span class="package-quantity">1000 likes</span>
+                        </div>
+                        <span class="package-price">$44.99</span>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">
+                    <i class="fas fa-shopping-cart"></i> Ordenar ahora
+                </button>
+            </div>
+            
+            <div id="fb-members" class="social-content">
+                <h3 class="section-title">Miembros para Grupos de Facebook</h3>
+                <p style="margin-bottom: 15px; color: #666;">Haz crecer tu comunidad con miembros reales y activos para tu grupo.</p>
+                
+                <div class="package-list">
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-users"></i>
+                            <span class="package-quantity">50 miembros</span>
+                        </div>
+                        <span class="package-price">$7.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-users"></i>
+                            <span class="package-quantity">100 miembros</span>
+                        </div>
+                        <span class="package-price">$14.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-users"></i>
+                            <span class="package-quantity">200 miembros <span class="badge badge-hot">POPULAR</span></span>
+                        </div>
+                        <span class="package-price">$27.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-users"></i>
+                            <span class="package-quantity">500 miembros</span>
+                        </div>
+                        <span class="package-price">$59.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-users"></i>
+                            <span class="package-quantity">1000 miembros</span>
+                        </div>
+                        <span class="package-price">$109.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-users"></i>
+                            <span class="package-quantity">5000 miembros</span>
+                        </div>
+                        <span class="package-price">$499.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-users"></i>
+                            <span class="package-quantity">10000 miembros</span>
+                        </div>
+                        <span class="package-price">$899.99</span>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">
+                    <i class="fas fa-shopping-cart"></i> Ordenar ahora
+                </button>
+            </div>
+        </section>
+
+        <!-- Sección Instagram -->
+        <section id="instagram" class="section">
+            <div class="social-tabs">
+                <div class="social-tab active" onclick="changeTab('ig-followers')">Seguidores</div>
+                <div class="social-tab" onclick="changeTab('ig-likes')">Likes</div>
+            </div>
+            
+            <div id="ig-followers" class="social-content active">
+                <h3 class="section-title">Seguidores para Instagram</h3>
+                <p style="margin-bottom: 15px; color: #666;">Aumenta tu audiencia con seguidores reales para tu perfil de Instagram.</p>
+                
+                <div class="package-list">
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-user-plus"></i>
+                            <span class="package-quantity">50 seguidores</span>
+                        </div>
+                        <span class="package-price">$5.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-user-plus"></i>
+                            <span class="package-quantity">100 seguidores</span>
+                        </div>
+                        <span class="package-price">$9.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-user-plus"></i>
+                            <span class="package-quantity">200 seguidores <span class="badge badge-hot">POPULAR</span></span>
+                        </div>
+                        <span class="package-price">$17.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-user-plus"></i>
+                            <span class="package-quantity">500 seguidores</span>
+                        </div>
+                        <span class="package-price">$39.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-user-plus"></i>
+                            <span class="package-quantity">1000 seguidores</span>
+                        </div>
+                        <span class="package-price">$69.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-user-plus"></i>
+                            <span class="package-quantity">5000 seguidores</span>
+                        </div>
+                        <span class="package-price">$299.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-user-plus"></i>
+                            <span class="package-quantity">10000 seguidores</span>
+                        </div>
+                        <span class="package-price">$499.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-user-plus"></i>
+                            <span class="package-quantity">50000 seguidores</span>
+                        </div>
+                        <span class="package-price">$1999.99</span>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">
+                    <i class="fas fa-shopping-cart"></i> Ordenar ahora
+                </button>
+            </div>
+            
+            <div id="ig-likes" class="social-content">
+                <h3 class="section-title">Likes para Instagram</h3>
+                <p style="margin-bottom: 15px; color: #666;">Aumenta el engagement de tus publicaciones con likes reales.</p>
+                
+                <div class="package-list">
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-heart"></i>
+                            <span class="package-quantity">50 likes</span>
+                        </div>
+                        <span class="package-price">$2.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-heart"></i>
+                            <span class="package-quantity">100 likes</span>
+                        </div>
+                        <span class="package-price">$4.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-heart"></i>
+                            <span class="package-quantity">200 likes <span class="badge badge-hot">POPULAR</span></span>
+                        </div>
+                        <span class="package-price">$8.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-heart"></i>
+                            <span class="package-quantity">500 likes</span>
+                        </div>
+                        <span class="package-price">$19.99</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info">
+                            <i class="fas fa-heart"></i>
+                            <span class="package-quantity">1000 likes</span>
+                        </div>
+                        <span class="package-price">$34.99</span>
+                    </div>
+                </div>
+                
+                                <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">
+                    <i class="fas fa-shopping-cart"></i> Ordenar ahora
+                </button>
+            </div>
+        </section>
+
+        <!-- Sección Soporte -->
+        <section id="soporte" class="section">
+            <h2 class="section-title">Soporte al Cliente</h2>
+            
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-headset"></i> ¿Necesitas ayuda?</h3>
+                <div class="card-content">
+                    Nuestro equipo de soporte está disponible 24/7 para resolver cualquier duda o problema que puedas tener con nuestros servicios.
                 </div>
             </div>
             
-            <div class="redeem-container">
-                <div class="section-title">Canjear Código</div>
-                <div class="redeem-input">
-                    <input type="text" id="redeem-code" placeholder="Ingresa tu código promocional">
-                    <button onclick="redeemCode()">Canjear</button>
+            
+                
+                <button class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-paper-plane"></i> Enviar mensaje
+                </button>
+            </div>
+          
+            
+            <div class="card" style="margin-top: 20px;">
+                <h3 class="card-title"><i class="fas fa-info-circle"></i> Información de contacto</h3>
+                <div class="card-content">
+                    <p><i class="fas fa-envelope"></i> Email: soporte@socialboost.com</p>
+                    <p><i class="fas fa-phone"></i> Teléfono: +1 (555) 123-4567</p>
+                    <p><i class="fab fa-whatsapp"></i> WhatsApp: +1 (555) 765-4321</p>
+                    <p><i class="fas fa-clock"></i> Horario: 24/7</p>
                 </div>
-                <div id="redeem-message" class="redeem-message"></div>
             </div>
-        </div>
-        
-        <!-- Referral Section -->
-        <div id="referral-section" class="section" style="display: none;">
-            <div class="section-title">Programa de Referidos</div>
-            <div class="referral-info">
-                ¡Invita a tus amigos y gana 0.0065 TON por cada amigo que se una usando tu enlace único! Tus amigos también recibirán 1 ticket de bienvenida.
-            </div>
-            <div class="referral-link-container">
-                <div class="referral-link" id="referral-link">
-                    https://t.me/TONSpinBot?start=ref_<span id="user-id">12345</span>
-                </div>
-                <button class="copy-wallet" onclick="copyReferralLink()">⎘</button>
-            </div>
-            <button class="copy-button" onclick="copyReferralLink()">
-                <span id="copy-text">Copiar Enlace</span>
-            </button>
-        </div>
+        </section>
     </div>
-    
-    <!-- Purchase Modal -->
-    <div id="purchase-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-title">Confirmar Compra</div>
-            <div class="modal-info">
-                Por favor transfiere <span id="modal-amount">0.1</span> TON a la siguiente wallet para completar tu compra de <span id="modal-tickets">1</span> ticket(s):
-            </div>
-            <div class="modal-wallet" id="modal-wallet">
-                EQABxwYQJqXzY3v8W9abcdefghijk1234567890XYZ
-                <button class="copy-wallet" onclick="copyWalletAddress()">⎘</button>
-            </div>
-            <div class="modal-info">
-                Después de realizar el pago, ingresa el ID de transacción para que nuestro equipo pueda verificar y aprobar tu compra. Recibirás un código de canje una vez confirmado el pago.
-            </div>
-            <input type="text" class="modal-input" id="transaction-id" placeholder="ID de Transacción">
-            <div class="modal-buttons">
-                <button class="modal-button cancel-button" onclick="hidePurchaseModal()">Cancelar</button>
-                <button class="modal-button confirm-button" onclick="confirmPurchase()">Enviar Verificación</button>
-            </div>
-        </div>
+
+    <!-- Navegación inferior -->
+    <div class="nav-bottom">
+        <a href="#" class="nav-item active" onclick="showSection('inicio')">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+        <a href="#" class="nav-item" onclick="showSection('servicios')">
+            <i class="fas fa-concierge-bell"></i>
+            <span>Servicios</span>
+        </a>
+        <a href="#" class="nav-item" onclick="showSection('facebook')">
+            <i class="fab fa-facebook"></i>
+            <span>Facebook</span>
+        </a>
+        <a href="#" class="nav-item" onclick="showSection('instagram')">
+            <i class="fab fa-instagram"></i>
+            <span>Instagram</span>
+        </a>
+        <a href="#" class="nav-item" onclick="showSection('soporte')">
+            <i class="fas fa-headset"></i>
+            <span>Soporte</span>
+        </a>
     </div>
-    
-    <!-- Success Modal -->
-    <div id="success-modal" class="modal">
-        <div class="modal-content" style="text-align: center;">
-            <div style="font-size: 50px; margin-bottom: 20px;">🎉</div>
-            <div class="modal-title" id="success-title">¡Verificación Enviada!</div>
-            <div class="modal-info" id="success-message">
-                Hemos recibido tu información de pago. Nuestro equipo verificará la transacción y te enviará un código de canje en un máximo de 24 horas. ¡Gracias por tu compra!
-            </div>
-            <button class="modal-button confirm-button" onclick="hideSuccessModal()" style="margin: 0 auto;">Entendido</button>
-        </div>
-    </div>
-    
-    <!-- Navigation -->
-    <div class="tab-navigation">
-        <button class="tab-button active" onclick="showSection('spin-section')">
-            <div class="tab-icon">🎡</div>
-            <span>Spin</span>
-        </button>
-        <button class="tab-button" onclick="showSection('tickets-section')">
-            <div class="tab-icon">🎫</div>
-            <span>Tickets</span>
-        </button>
-        <button class="tab-button" onclick="showSection('referral-section')">
-            <div class="tab-icon">👥</div>
-            <span>Referidos</span>
-        </button>
-    </div>
-    
+
     <script>
-        // App Data
-        const appData = {
-            balance: 0,
-            tickets: 0,
-            lastSpin: null,
-            lastFreeTicket: null,
-            purchasedTickets: 0,
-            referralCount: 0,
-            premiumSpin: false,
-            premiumSpinCount: 0,
-            codesUsed: [],
-            userId: Math.floor(10000 + Math.random() * 90000) // Random user ID for referral
-        };
-        
-        // Wheel configuration
-        const wheelSegments = [
-            { value: "0.0038 TON", color: "#FF5252", weight: 20 },
-            { value: "0.0065 TON", color: "#FF4081", weight: 18 },
-            { value: "0.01 TON", color: "#E040FB", weight: 15 },
-            { value: "0.05 TON", color: "#7C4DFF", weight: 10 },
-            { value: "0.1 TON", color: "#536DFE", weight: 5 },
-            { value: "0.5 TON", color: "#448AFF", weight: 2 },
-            { value: "1 TON", color: "#40C4FF", weight: 1 },
-            { value: "0.0038 TON", color: "#18FFFF", weight: 20 },
-            { value: "0.0065 TON", color: "#64FFDA", weight: 18 },
-            { value: "0.01 TON", color: "#69F0AE", weight: 15 },
-            { value: "0.05 TON", color: "#B2FF59", weight: 10 },
-            { value: "0.1 TON", color: "#EEFF41", weight: 5 },
-            { value: "0.5 TON", color: "#FFFF00", weight: 2 },
-            { value: "1 TON", color: "#FFD740", weight: 1 }
-        ];
-        
-        // Redeem codes
-        const redeemCodes = {
-            "SPIN2025": { tickets: 3, premium: false },
-            "TONSPIN": { tickets: 5, premium: false },
-            "GIRAGANA": { tickets: 10, premium: false },
-            "PREMIUM25": { tickets: 25, premium: true, premiumSpins: 25 },
-            "MEGAGANA100": { tickets: 100, premium: true, premiumSpins: 100 }
-        };
-        
-        // Current purchase info
-        let currentPurchase = {
-            tickets: 0,
-            amount: 0
-        };
-        
-        // Initialize the app
-        function initApp() {
-            loadData();
-            setupWheel();
-            updateUI();
-            checkSpinAvailability();
-            checkFreeTicket();
-            document.getElementById('user-id').textContent = appData.userId;
-            
-            // Check for free ticket every minute
-            setInterval(checkFreeTicket, 60000);
-        }
-        
-        // Load data from localStorage
-        function loadData() {
-            const savedData = localStorage.getItem('tonSpinData');
-            if (savedData) {
-                Object.assign(appData, JSON.parse(savedData));
-            }
-        }
-        
-        // Save data to localStorage
-        function saveData() {
-            localStorage.setItem('tonSpinData', JSON.stringify(appData));
-        }
-        
-        // Setup the wheel segments
-        function setupWheel() {
-            const wheel = document.getElementById('wheel');
-            wheel.innerHTML = '';
-            
-            let accumulatedWeight = 0;
-            const totalWeight = wheelSegments.reduce((sum, segment) => sum + segment.weight, 0);
-            
-            wheelSegments.forEach((segment, index) => {
-                const segmentElement = document.createElement('div');
-                segmentElement.className = 'wheel-item';
-                
-                // Calculate angle for each segment
-                const angleStart = (accumulatedWeight / totalWeight) * 360;
-                accumulatedWeight += segment.weight;
-                const angleEnd = (accumulatedWeight / totalWeight) * 360;
-                const angle = angleEnd - angleStart;
-                
-                segmentElement.style.transform = `rotate(${angleStart}deg)`;
-                segmentElement.style.backgroundColor = segment.color;
-                segmentElement.innerHTML = `<span>${segment.value}</span>`;
-                
-                wheel.appendChild(segmentElement);
-            });
-        }
-        
-        // Update UI elements
-        function updateUI() {
-            document.getElementById('balance').textContent = appData.balance.toFixed(4);
-            document.getElementById('tickets').textContent = appData.tickets;
-        }
-        
-        // Check for free ticket every 24 hours
-        function checkFreeTicket() {
-            const now = new Date();
-            
-            if (!appData.lastFreeTicket) {
-                // First time user, give a free ticket
-                appData.tickets += 1;
-                appData.lastFreeTicket = now.toISOString();
-                saveData();
-                updateUI();
-                checkSpinAvailability();
-                return;
-            }
-            
-            const lastFreeTicketTime = new Date(appData.lastFreeTicket);
-            const hoursDiff = (now - lastFreeTicketTime) / (1000 * 60 * 60);
-            
-            if (hoursDiff >= 24) {
-                appData.tickets += 1;
-                appData.lastFreeTicket = now.toISOString();
-                saveData();
-                updateUI();
-                checkSpinAvailability();
-                
-                // Show notification if on spin page
-                if (document.getElementById('spin-section').style.display !== 'none') {
-                    showMessage(document.createElement('div'), '¡Has recibido 1 ticket gratis!', 'success');
-                }
-            }
-        }
-        
-        // Check if spin is available
-        function checkSpinAvailability() {
-            const spinButton = document.getElementById('spin-button');
-            const now = new Date();
-            
-            // Always enable if user has tickets
-            if (appData.tickets > 0) {
-                spinButton.disabled = false;
-                spinButton.textContent = 'Girar';
-                return;
-            }
-            
-            // Check for premium spins
-            if (appData.premiumSpin && appData.premiumSpinCount > 0) {
-                spinButton.disabled = false;
-                spinButton.textContent = 'Girar (' + appData.premiumSpinCount + ' restantes)';
-                return;
-            }
-            
-            // If no tickets, check last free ticket time
-            if (appData.lastFreeTicket) {
-                const lastFreeTicketTime = new Date(appData.lastFreeTicket);
-                const hoursDiff = (now - lastFreeTicketTime) / (1000 * 60 * 60);
-                
-                if (hoursDiff < 24) {
-                    spinButton.disabled = true;
-                    const hoursLeft = 24 - hoursDiff;
-                    const minutesLeft = Math.ceil((hoursLeft - Math.floor(hoursLeft)) * 60);
-                    
-                    if (hoursLeft >= 1) {
-                        spinButton.textContent = `Próximo ticket en ${Math.floor(hoursLeft)}h ${minutesLeft}m`;
-                    } else {
-                        spinButton.textContent = `Próximo ticket en ${minutesLeft}m`;
-                    }
-                    return;
-                }
-            }
-            
-            // Default state (shouldn't normally reach here)
-            spinButton.disabled = true;
-            spinButton.textContent = 'Sin Tickets';
-        }
-        
-        // Spin the wheel
-        function spinWheel() {
-            const wheel = document.getElementById('wheel');
-            const spinButton = document.getElementById('spin-button');
-            
-            // Disable button during spin
-            spinButton.disabled = true;
-            
-            // Determine if this is a premium spin
-            const isPremiumSpin = appData.premiumSpin && appData.premiumSpinCount > 0;
-            const hasTickets = appData.tickets > 0;
-            
-            if (!isPremiumSpin && !hasTickets) return;
-            
-            // Calculate random stop position (weighted)
-            let totalWeight = wheelSegments.reduce((sum, segment) => sum + segment.weight, 0);
-            let random = Math.random() * totalWeight;
-            let accumulatedWeight = 0;
-            let selectedIndex = 0;
-            
-            for (let i = 0; i < wheelSegments.length; i++) {
-                accumulatedWeight += wheelSegments[i].weight;
-                if (random <= accumulatedWeight) {
-                    selectedIndex = i;
-                    break;
-                }
-            }
-            
-            // For non-premium spins, ensure only common values can be selected
-            if (!isPremiumSpin) {
-                while (wheelSegments[selectedIndex].weight <= 2) {
-                    selectedIndex = Math.floor(Math.random() * wheelSegments.length);
-                }
-            }
-            
-            // Calculate rotation (5 full rotations + segment angle)
-            const segmentAngle = 360 / wheelSegments.length;
-            const rotation = 1800 + (360 - (selectedIndex * segmentAngle + segmentAngle / 2));
-            
-            // Apply rotation
-            wheel.style.transform = `rotate(${rotation}deg)`;
-            
-            // After spin completes
-            setTimeout(() => {
-                // Process the result
-                const result = wheelSegments[selectedIndex].value;
-                const amount = parseFloat(result.split(' ')[0]);
-                
-                // Update balance
-                appData.balance += amount;
-                
-                // Update tickets or premium spins
-                if (isPremiumSpin) {
-                    appData.premiumSpinCount--;
-                    if (appData.premiumSpinCount <= 0) {
-                        appData.premiumSpin = false;
-                    }
-                } else {
-                    appData.tickets--;
-                }
-                
-                // Save and update UI
-                saveData();
-                updateUI();
-                checkSpinAvailability();
-                
-                // Show confetti effect
-                createConfetti();
-                
-                // Show result alert with animation
-                showResultAlert(`¡Ganaste ${result}!`);
-            }, 5000);
-        }
-        
-        // Create confetti effect
-        function createConfetti() {
-            const colors = ['#FF5252', '#FF4081', '#E040FB', '#7C4DFF', '#536DFE', '#448AFF', '#40C4FF', '#18FFFF', '#64FFDA', '#69F0AE', '#B2FF59', '#EEFF41', '#FFFF00', '#FFD740'];
-            
-            for (let i = 0; i < 100; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.width = Math.random() * 10 + 5 + 'px';
-                confetti.style.height = Math.random() * 10 + 5 + 'px';
-                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
-                document.body.appendChild(confetti);
-                
-                // Remove confetti after animation
-                setTimeout(() => {
-                    confetti.remove();
-                }, 5000);
-            }
-               // Show result alert with animation
-        function showResultAlert(message) {
-            const alertBox = document.createElement('div');
-            alertBox.style.position = 'fixed';
-            alertBox.style.top = '20%';
-            alertBox.style.left = '50%';
-            alertBox.style.transform = 'translateX(-50%)';
-            alertBox.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-            alertBox.style.color = 'white';
-            alertBox.style.padding = '20px 30px';
-            alertBox.style.borderRadius = '15px';
-            alertBox.style.zIndex = '1000';
-            alertBox.style.textAlign = 'center';
-            alertBox.style.fontSize = '18px';
-            alertBox.style.fontWeight = '600';
-            alertBox.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.5)';
-            alertBox.style.border = '2px solid ' + getRandomColor();
-            alertBox.textContent = message;
-            alertBox.style.animation = 'fadeIn 0.5s, pulse 1s 3';
-            
-            document.body.appendChild(alertBox);
-            
-            setTimeout(() => {
-                alertBox.style.animation = 'fadeOut 0.5s';
-                setTimeout(() => {
-                    alertBox.remove();
-                }, 500);
-            }, 3000);
-        }
-        
-        // Show purchase modal
-        function showPurchaseModal(tickets, amount) {
-            currentPurchase = { tickets, amount };
-            
-            document.getElementById('modal-amount').textContent = amount;
-            document.getElementById('modal-tickets').textContent = tickets;
-            document.getElementById('purchase-modal').style.display = 'flex';
-        }
-        
-        // Hide purchase modal
-        function hidePurchaseModal() {
-            document.getElementById('purchase-modal').style.display = 'none';
-            document.getElementById('transaction-id').value = '';
-        }
-        
-        // Show success modal
-        function showSuccessModal() {
-            document.getElementById('success-modal').style.display = 'flex';
-        }
-        
-        // Hide success modal
-        function hideSuccessModal() {
-            document.getElementById('success-modal').style.display = 'none';
-        }
-        
-        // Confirm purchase
-        function confirmPurchase() {
-            const transactionId = document.getElementById('transaction-id').value.trim();
-            
-            if (!transactionId) {
-                alert('Por favor ingresa el ID de transacción');
-                return;
-            }
-            
-            // In a real app, you would send this to your backend for verification
-            console.log(`Transaction submitted: ${transactionId} for ${currentPurchase.tickets} tickets (${currentPurchase.amount} TON)`);
-            
-            // Show success message
-            hidePurchaseModal();
-            showSuccessModal();
-            
-            // Reset form
-            document.getElementById('transaction-id').value = '';
-            
-            // IMPORTANTE: No sumamos los tickets aquí, solo después de verificación
-        }
-        
-        // Copy wallet address
-        function copyWalletAddress() {
-            const wallet = document.getElementById('modal-wallet').textContent.trim();
-            navigator.clipboard.writeText(wallet).then(() => {
-                const copyBtn = document.querySelector('.copy-wallet');
-                copyBtn.textContent = '✓';
-                setTimeout(() => {
-                    copyBtn.textContent = '⎘';
-                }, 2000);
-            });
-        }
-        
-        // Copy referral link
-        function copyReferralLink() {
-            const link = document.getElementById('referral-link').textContent.trim();
-            navigator.clipboard.writeText(link).then(() => {
-                const copyText = document.getElementById('copy-text');
-                copyText.textContent = '¡Copiado!';
-                setTimeout(() => {
-                    copyText.textContent = 'Copiar Enlace';
-                }, 2000);
-            });
-        }
-        
-        // Redeem code
-        function redeemCode() {
-            const codeInput = document.getElementById('redeem-code');
-            const code = codeInput.value.trim().toUpperCase();
-            const messageElement = document.getElementById('redeem-message');
-            
-            if (!code) {
-                showMessage(messageElement, 'Por favor ingresa un código', 'error');
-                return;
-            }
-            
-            if (appData.codesUsed.includes(code)) {
-                showMessage(messageElement, 'Este código ya ha sido canjeado', 'error');
-                return;
-            }
-            
-            if (!redeemCodes[code]) {
-                showMessage(messageElement, 'Código inválido', 'error');
-                return;
-            }
-            
-            const reward = redeemCodes[code];
-            appData.tickets += reward.tickets;
-            appData.codesUsed.push(code);
-            
-            if (reward.premium) {
-                appData.premiumSpin = true;
-                appData.premiumSpinCount += reward.premiumSpins;
-            }
-            
-            // Save and update
-            saveData();
-            updateUI();
-            checkSpinAvailability();
-            
-            showMessage(messageElement, `¡Código canjeado! Has recibido ${reward.tickets} tickets${reward.premium ? ' y giros premium!' : '.'}`, 'success');
-            
-            codeInput.value = '';
-        }
-        
-        // Show message with animation
-        function showMessage(element, text, type) {
-            element.textContent = text;
-            element.className = 'redeem-message show ' + type;
-            setTimeout(() => {
-                element.className = 'redeem-message';
-            }, 5000);
-        }
-        
-        // Get random color for alerts
-        function getRandomColor() {
-            const colors = ['#FF5252', '#FF4081', '#E040FB', '#7C4DFF', '#536DFE', '#448AFF', '#40C4FF', '#18FFFF', '#64FFDA', '#69F0AE', '#B2FF59', '#EEFF41', '#FFFF00', '#FFD740'];
-            return colors[Math.floor(Math.random() * colors.length)];
-        }
-        
-        // Show section
+        // Función para cambiar entre secciones
         function showSection(sectionId) {
+            // Ocultar todas las secciones
             document.querySelectorAll('.section').forEach(section => {
-                section.style.display = 'none';
+                section.classList.remove('active');
             });
             
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.classList.remove('active');
+            // Mostrar la sección seleccionada
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Actualizar navegación inferior
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
             });
             
-            document.getElementById(sectionId).style.display = 'block';
-            
-            // Find and activate the corresponding tab button
-            const tabButtons = document.querySelectorAll('.tab-button');
-            for (let i = 0; i < tabButtons.length; i++) {
-                if (tabButtons[i].textContent.includes(
-                    document.getElementById(sectionId).querySelector('.section-title').textContent.trim())) {
-                    tabButtons[i].classList.add('active');
-                    break;
-                }
+            // Marcar como activo el ítem correspondiente en la navegación
+            if (sectionId === 'inicio') {
+                document.querySelectorAll('.nav-item')[0].classList.add('active');
+            } else if (sectionId === 'servicios') {
+                document.querySelectorAll('.nav-item')[1].classList.add('active');
+            } else if (sectionId === 'facebook') {
+                document.querySelectorAll('.nav-item')[2].classList.add('active');
+            } else if (sectionId === 'instagram') {
+                document.querySelectorAll('.nav-item')[3].classList.add('active');
+            } else if (sectionId === 'soporte') {
+                document.querySelectorAll('.nav-item')[4].classList.add('active');
             }
+            
+            // Scroll hacia arriba
+            window.scrollTo(0, 0);
         }
         
-        // Event listeners
-        document.getElementById('spin-button').addEventListener('click', spinWheel);
+        // Función para cambiar entre pestañas en Facebook/Instagram
+        function changeTab(tabId) {
+            // Obtener el contenedor padre (sección de facebook o instagram)
+            const parentSection = event.target.closest('.section');
+            
+            // Ocultar todos los contenidos de pestañas
+            parentSection.querySelectorAll('.social-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Mostrar el contenido de la pestaña seleccionada
+            document.getElementById(tabId).classList.add('active');
+            
+            // Actualizar pestañas activas
+            parentSection.querySelectorAll('.social-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Marcar la pestaña actual como activa
+            event.target.classList.add('active');
+        }
         
-        // Add animation to wheel on load
-        document.addEventListener('DOMContentLoaded', () => {
-            initApp();
+        // Función para enviar formulario de soporte
+        document.querySelector('.support-form .btn-primary').addEventListener('click', function() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
             
-            // Initial animation
-            setTimeout(() => {
-                document.querySelector('.wheel').style.transform = 'rotate(5deg)';
-                setTimeout(() => {
-                    document.querySelector('.wheel').style.transform = 'rotate(-5deg)';
-                    setTimeout(() => {
-                        document.querySelector('.wheel').style.transform = 'rotate(0deg)';
-                    }, 300);
-                }, 300);
-            }, 500);
+            if (!name || !email || !subject || !message) {
+                alert('Por favor completa todos los campos del formulario.');
+                return;
+            }
             
-            // Add hover effect to sections
-            document.querySelectorAll('.section').forEach(section => {
-                section.addEventListener('mouseenter', () => {
-                    section.style.transform = 'translateY(-5px)';
-                    section.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.4)';
-                });
+            // Aquí iría la lógica para enviar el formulario
+            alert(`Gracias ${name}, tu mensaje ha sido enviado. Nos pondremos en contacto contigo pronto.`);
+            
+            // Limpiar formulario
+            document.getElementById('name').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('subject').value = '';
+            document.getElementById('message').value = '';
+        });
+        
+        // Función para simular compra
+        document.querySelectorAll('.package-list .btn-primary').forEach(button => {
+            button.addEventListener('click', function() {
+                const packageItem = this.closest('.social-content');
+                const service = packageItem.querySelector('.section-title').textContent;
+                const packageInfo = this.closest('.package-item').querySelector('.package-quantity').textContent;
+                const price = this.closest('.package-item').querySelector('.package-price').textContent;
                 
-                section.addEventListener('mouseleave', () => {
-                    section.style.transform = '';
-                    section.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)';
-                });
+                alert(`Has seleccionado: ${service}\nPaquete: ${packageInfo}\nPrecio: ${price}\n\nSerás redirigido al checkout.`);
             });
         });
         
-        // Add CSS for fadeOut animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeOut {
-                from { opacity: 1; }
-                to { opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
+        // Animación para los elementos de servicio al hacer hover
+        document.querySelectorAll('.service-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+                this.style.boxShadow = '0 10px 15px rgba(0, 0, 0, 0.1)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+                this.style.boxShadow = '';
+            });
+        });
+        
+        // Inicialización - Mostrar sección de inicio al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            showSection('inicio');
+        });
     </script>
 </body>
 </html>
