@@ -568,6 +568,157 @@
                 grid-template-columns: 1fr;
             }
         }
+      
+      .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(20px);
+            animation: slideUp 0.3s ease-out 0.1s forwards;
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .payment-info {
+            margin-bottom: 20px;
+        }
+
+        .payment-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 15px 0;
+            color: var(--primary);
+        }
+
+        .crypto-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .crypto-option {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .crypto-option:hover {
+            border-color: var(--accent);
+        }
+
+        .crypto-option.active {
+            border-color: var(--primary);
+            background: rgba(67, 97, 238, 0.1);
+        }
+
+        .crypto-icon {
+            width: 30px;
+            height: 30px;
+            margin-bottom: 5px;
+        }
+
+        .wallet-container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            position: relative;
+        }
+
+        .wallet-address {
+            font-family: monospace;
+            word-break: break-all;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+
+        .copy-wallet {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 3px 8px;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+
+        .payment-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn-cancel {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .btn-cancel:hover {
+            background: #e0e0e0;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .success-icon {
+            font-size: 3rem;
+            color: var(--success);
+            margin-bottom: 15px;
+        }
+
     </style>
 </head>
 <body>
@@ -1177,6 +1328,170 @@
         document.addEventListener('DOMContentLoaded', function() {
             showSection('inicio');
         });
+      
+      // Datos de wallets para cada criptomoneda
+        const cryptoWallets = {
+            'USDT': 'TXYZ1234567890abcdefghijk',
+            'TRX': 'TXYZ9876543210zyxwvutsrq',
+            'BNB': 'bnb1qwertyuiopasdfghjklzxcvbnm',
+            'BTC': '3FZbgi29cpjq2GjdwV8eyHuJJnkLtktZc5',
+            'LTC': 'M8gZqgY4r2RoE9x5pQ3mz6JwL9vXy4kRz',
+            'SOL': '5grHYJYFQ2UetRxzQ2n11K7mkCc8WoSp9JXm4C2X4q3d',
+            'TON': 'EQAB1tJbwVQKvWz4h5g6j7k8l9m0n1o2p3q4r5s6t7u8v9'
+        };
+
+        // Variables para el pago actual
+        let currentPaymentAmount = 0;
+        let currentCrypto = 'USDT';
+
+        // Función para abrir el modal de pago
+        function openPaymentModal(amount) {
+            currentPaymentAmount = amount;
+            document.getElementById('paymentAmount').textContent = `$${amount.toFixed(2)}`;
+            document.getElementById('paymentModal').style.display = 'flex';
+            document.getElementById('paymentForm').style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+            
+            // Actualizar wallet address
+            document.getElementById('walletAddress').textContent = cryptoWallets[currentCrypto];
+        }
+
+        // Función para cerrar el modal
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+
+        // Event listeners para los botones "Ordenar ahora"
+        document.querySelectorAll('.package-list .btn-primary').forEach(button => {
+            button.addEventListener('click', function() {
+                const packageItem = this.closest('.package-item');
+                const priceText = packageItem.querySelector('.package-price').textContent;
+                const price = parseFloat(priceText.replace(/[^\d.]/g, ''));
+                
+                openPaymentModal(price);
+            });
+        });
+
+        // Selección de criptomoneda
+        document.querySelectorAll('.crypto-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.crypto-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                currentCrypto = this.getAttribute('data-crypto');
+                document.getElementById('walletAddress').textContent = cryptoWallets[currentCrypto];
+            });
+        });
+
+        // Copiar dirección de wallet
+        document.getElementById('copyWallet').addEventListener('click', function() {
+            const walletAddress = document.getElementById('walletAddress').textContent;
+            navigator.clipboard.writeText(walletAddress).then(() => {
+                this.innerHTML = '<i class="fas fa-check"></i> Copiado';
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-copy"></i> Copiar';
+                }, 2000);
+            });
+        });
+
+        // Botón de cancelar
+        document.getElementById('cancelPayment').addEventListener('click', closePaymentModal);
+
+        // Botón de pago completado
+        document.getElementById('completePayment').addEventListener('click', function() {
+            document.getElementById('paymentForm').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+        });
+
+        // Cerrar modal desde el mensaje de éxito
+        document.getElementById('closeModal').addEventListener('click', closePaymentModal);
+
+        // Cerrar modal haciendo clic fuera del contenido
+        document.getElementById('paymentModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePaymentModal();
+            }
+        });
+
+        // Cerrar con la X
+        document.querySelector('.close-modal').addEventListener('click', closePaymentModal);
+
+        // Resto del código JavaScript anterior permanece igual
+    
     </script>
+  
+   <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Pago con Criptomonedas</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <div id="paymentForm">
+                <div class="payment-info">
+                    <p>Por favor envía el monto exacto en la criptomoneda seleccionada:</p>
+                    <div class="payment-amount" id="paymentAmount">$0.00</div>
+                </div>
+                
+                <h4>Selecciona una criptomoneda:</h4>
+                <div class="crypto-options">
+                    <div class="crypto-option active" data-crypto="USDT" data-network="TRC20">
+                        <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt="USDT" class="crypto-icon">
+                        <span>USDT (TRC20)</span>
+                    </div>
+                    <div class="crypto-option" data-crypto="TRX">
+                        <img src="https://cryptologos.cc/logos/tron-trx-logo.png" alt="TRX" class="crypto-icon">
+                        <span>TRON</span>
+                    </div>
+                    <div class="crypto-option" data-crypto="BNB">
+                        <img src="https://cryptologos.cc/logos/bnb-bnb-logo.png" alt="BNB" class="crypto-icon">
+                        <span>BNB</span>
+                    </div>
+                    <div class="crypto-option" data-crypto="BTC">
+                        <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="BTC" class="crypto-icon">
+                        <span>Bitcoin</span>
+                    </div>
+                    <div class="crypto-option" data-crypto="LTC">
+                        <img src="https://cryptologos.cc/logos/litecoin-ltc-logo.png" alt="LTC" class="crypto-icon">
+                        <span>Litecoin</span>
+                    </div>
+                    <div class="crypto-option" data-crypto="SOL">
+                        <img src="https://cryptologos.cc/logos/solana-sol-logo.png" alt="SOL" class="crypto-icon">
+                        <span>Solana</span>
+                    </div>
+                    <div class="crypto-option" data-crypto="TON">
+                        <img src="https://cryptologos.cc/logos/toncoin-ton-logo.png" alt="TON" class="crypto-icon">
+                        <span>Toncoin</span>
+                    </div>
+                </div>
+                
+                <div class="wallet-container">
+                    <h4>Dirección de wallet:</h4>
+                    <div class="wallet-address" id="walletAddress">TXYZ1234567890abcdefghijk</div>
+                    <button class="copy-wallet" id="copyWallet">
+                        <i class="fas fa-copy"></i> Copiar
+                    </button>
+                    <p class="small-text">Envía exactamente el monto mostrado a esta dirección</p>
+                </div>
+                
+                <div class="payment-actions">
+                    <button class="btn btn-cancel" id="cancelPayment">Cancelar</button>
+                    <button class="btn btn-primary" id="completePayment">Pago Completado</button>
+                </div>
+            </div>
+            
+            <div id="successMessage" class="success-message">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>¡Gracias por tu pago!</h3>
+                <p>Por favor dirígete al botón "Verificar pedido" en nuestro bot de soporte para completar tu orden.</p>
+                <button class="btn btn-primary" id="closeModal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
