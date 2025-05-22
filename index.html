@@ -1295,9 +1295,81 @@
             <span>Soporte</span>
         </a>
     </div>
+  <!-- Modal de pago en cripto -->
+<div id="cryptoModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <h3 class="modal-title"><i class="fas fa-coins"></i> Pago con Criptomonedas</h3>
+    
+    <div class="payment-info">
+      <div class="info-item">
+        <i class="fas fa-tag"></i>
+        <span id="packageDescription">Paquete no seleccionado</span>
+      </div>
+      <div class="info-item">
+        <i class="fas fa-dollar-sign"></i>
+        <span>Total: <strong id="paymentAmount">$0.00</strong> USD</span>
+      </div>
+    </div>
+    
+    <div class="crypto-selector">
+      <label for="cryptoCurrency"><i class="fas fa-coins"></i> Selecciona criptomoneda:</label>
+      <select id="cryptoCurrency" class="form-control">
+        <option value="">-- Selecciona --</option>
+        <option value="USDT_TRC20">USDT (TRC20)</option>
+        <option value="TRX">TRON (TRX)</option>
+        <option value="BNB">BNB (BEP20)</option>
+        <option value="BTC">Bitcoin (BTC)</option>
+        <option value="LTC">Litecoin (LTC)</option>
+        <option value="SOL">Solana (SOL)</option>
+        <option value="TON">Toncoin (TON)</option>
+      </select>
+    </div>
+    
+    <div class="wallet-info">
+      <div class="wallet-address-container">
+        <label><i class="fas fa-wallet"></i> Dirección de pago:</label>
+        <div class="address-box">
+          <input type="text" id="walletAddress" readonly value="Selecciona una criptomoneda">
+          <button id="copyWallet" class="btn-copy">
+            <i class="fas fa-copy"></i>
+          </button>
+        </div>
+        <small class="note">Envía exactamente el monto en USD convertido a la criptomoneda seleccionada</small>
+      </div>
+      
+      <div class="qrcode-container hidden">
+        <div id="qrcode"></div>
+        <small>Escanear para pagar</small>
+      </div>
+    </div>
+    
+    <div class="modal-buttons">
+      <button id="cancelPayment" class="btn btn-outline">
+        <i class="fas fa-times"></i> Cancelar
+      </button>
+      <button id="completePayment" class="btn btn-primary" disabled>
+        <i class="fas fa-check-circle"></i> Pago Completado
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de confirmación -->
+<div id="confirmationModal" class="modal">
+  <div class="modal-content small">
+    <h3 class="modal-title"><i class="fas fa-check-circle"></i> Pago Registrado</h3>
+    <p>Por favor dirígete al botón <strong>"Verificar pedido"</strong> en nuestro bot de Telegram para completar tu orden.</p>
+    <div class="modal-buttons center">
+      <button id="closeConfirmation" class="btn btn-primary">
+        <i class="fas fa-thumbs-up"></i> Entendido
+      </button>
+    </div>
+  </div>
+</div>
 
     <script>
-       // Función para cambiar entre secciones
+        // Función para cambiar entre secciones
 function showSection(sectionId) {
   // Ocultar todas las secciones
   document.querySelectorAll('.section').forEach(section => {
@@ -1494,77 +1566,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
     </script>
   
-  <!-- Modal de pago en cripto -->
-<div id="cryptoModal" class="modal">
-  <div class="modal-content">
-    <span class="close-modal">&times;</span>
-    <h3 class="modal-title"><i class="fas fa-coins"></i> Pago con Criptomonedas</h3>
-    
-    <div class="payment-info">
-      <div class="info-item">
-        <i class="fas fa-tag"></i>
-        <span id="packageDescription">Paquete no seleccionado</span>
-      </div>
-      <div class="info-item">
-        <i class="fas fa-dollar-sign"></i>
-        <span>Total: <strong id="paymentAmount">$0.00</strong> USD</span>
-      </div>
-    </div>
-    
-    <div class="crypto-selector">
-      <label for="cryptoCurrency"><i class="fas fa-coins"></i> Selecciona criptomoneda:</label>
-      <select id="cryptoCurrency" class="form-control">
-        <option value="">-- Selecciona --</option>
-        <option value="USDT_TRC20">USDT (TRC20)</option>
-        <option value="TRX">TRON (TRX)</option>
-        <option value="BNB">BNB (BEP20)</option>
-        <option value="BTC">Bitcoin (BTC)</option>
-        <option value="LTC">Litecoin (LTC)</option>
-        <option value="SOL">Solana (SOL)</option>
-        <option value="TON">Toncoin (TON)</option>
-      </select>
-    </div>
-    
-    <div class="wallet-info">
-      <div class="wallet-address-container">
-        <label><i class="fas fa-wallet"></i> Dirección de pago:</label>
-        <div class="address-box">
-          <input type="text" id="walletAddress" readonly value="Selecciona una criptomoneda">
-          <button id="copyWallet" class="btn-copy">
-            <i class="fas fa-copy"></i>
-          </button>
-        </div>
-        <small class="note">Envía exactamente el monto en USD convertido a la criptomoneda seleccionada</small>
-      </div>
-      
-      <div class="qrcode-container hidden">
-        <div id="qrcode"></div>
-        <small>Escanear para pagar</small>
-      </div>
-    </div>
-    
-    <div class="modal-buttons">
-      <button id="cancelPayment" class="btn btn-outline">
-        <i class="fas fa-times"></i> Cancelar
-      </button>
-      <button id="completePayment" class="btn btn-primary" disabled>
-        <i class="fas fa-check-circle"></i> Pago Completado
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- Modal de confirmación -->
-<div id="confirmationModal" class="modal">
-  <div class="modal-content small">
-    <h3 class="modal-title"><i class="fas fa-check-circle"></i> Pago Registrado</h3>
-    <p>Por favor dirígete al botón <strong>"Verificar pedido"</strong> en nuestro bot de Telegram para completar tu orden.</p>
-    <div class="modal-buttons center">
-      <button id="closeConfirmation" class="btn btn-primary">
-        <i class="fas fa-thumbs-up"></i> Entendido
-      </button>
-    </div>
-  </div>
-</div>
 </body>
 </html>
