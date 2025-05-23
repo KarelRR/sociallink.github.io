@@ -999,42 +999,43 @@
                 }
             }
             
-              // Función para actualizar estadísticas de forma simulada
+            // Función para actualizar estadísticas de forma simulada
             function updateStats() {
                 const usersElement = document.getElementById('total-users');
                 const depositsElement = document.getElementById('total-deposits');
                 const withdrawalsElement = document.getElementById('total-withdrawals');
                 
-                // Incrementar usuarios (entre 50 y 200 por día)
+                // Incrementar usuarios (entre 5 y 20 por hora)
                 let currentUsers = parseInt(usersElement.textContent.replace(/,/g, ''));
-                currentUsers += Math.floor(Math.random() * 150) + 50;
+                currentUsers += Math.floor(Math.random() * 15) + 5;
                 usersElement.textContent = currentUsers.toLocaleString();
                 
-                // Incrementar depósitos (entre $50k y $200k por día)
-                let currentDeposits = parseFloat(depositsElement.textContent.replace(/\$|M/g, ''));
-                currentDeposits += (Math.random() * 0.15 + 0.05);
-                depositsElement.textContent = `$${currentDeposits.toFixed(1)}M`;
+                // Incrementar depósitos (entre $100 y $500 por hora)
+                let currentDeposits = parseInt(depositsElement.textContent.replace(/\$|,/g, ''));
+                currentDeposits += Math.floor(Math.random() * 400) + 100;
+                depositsElement.textContent = "$" + currentDeposits.toLocaleString();
                 
-                // Incrementar retiros (entre $40k y $180k por día)
-                let currentWithdrawals = parseFloat(withdrawalsElement.textContent.replace(/\$|M/g, ''));
-                currentWithdrawals += (Math.random() * 0.14 + 0.04);
-                withdrawalsElement.textContent = `$${currentWithdrawals.toFixed(1)}M`;
+                               // Incrementar retiros (entre $80 y $400 por hora)
+                let currentWithdrawals = parseInt(withdrawalsElement.textContent.replace(/\$|,/g, ''));
+                currentWithdrawals += Math.floor(Math.random() * 320) + 80;
+                withdrawalsElement.textContent = "$" + currentWithdrawals.toLocaleString();
             }
-            
+
             // Verificar y actualizar días en línea cada hora
             updateDaysOnline();
-            setInterval(updateDaysOnline, 60 * 60 * 1000); // Cada hora
-            
+            setInterval(updateDaysOnline, 3600000); // Cada hora
+            setInterval(updateStats, 3600000); // Actualizar stats cada hora
+
             // Abrir modal de inversión
             investBtn.addEventListener('click', function() {
                 investModal.style.display = 'flex';
             });
-            
+
             // Cerrar modal de inversión
             closeModal.addEventListener('click', function() {
                 investModal.style.display = 'none';
             });
-            
+
             // Cerrar modal al hacer clic fuera del contenido
             window.addEventListener('click', function(event) {
                 if (event.target === investModal) {
@@ -1044,7 +1045,7 @@
                     confirmationModal.style.display = 'none';
                 }
             });
-            
+
             // Seleccionar criptomoneda
             cryptoOptions.forEach(option => {
                 option.addEventListener('click', function() {
@@ -1065,7 +1066,7 @@
                     depositContainer.style.display = 'block';
                 });
             });
-            
+
             // Copiar dirección al portapapeles
             copyAddressBtn.addEventListener('click', function() {
                 const textToCopy = cryptoAddress.textContent;
@@ -1075,24 +1076,48 @@
                     icon.classList.remove('fa-copy');
                     icon.classList.add('fa-check');
                     
+                    // Mostrar notificación flotante
+                    const notification = document.createElement('div');
+                    notification.textContent = '¡Dirección copiada!';
+                    notification.style.position = 'fixed';
+                    notification.style.bottom = '100px';
+                    notification.style.left = '50%';
+                    notification.style.transform = 'translateX(-50%)';
+                    notification.style.backgroundColor = 'rgba(0,0,0,0.7)';
+                    notification.style.color = 'white';
+                    notification.style.padding = '10px 20px';
+                    notification.style.borderRadius = '20px';
+                    notification.style.zIndex = '1000';
+                    notification.style.animation = 'fadeInOut 2s';
+                    document.body.appendChild(notification);
+                    
                     setTimeout(() => {
                         icon.classList.remove('fa-check');
                         icon.classList.add('fa-copy');
+                        notification.remove();
                     }, 2000);
                 });
             });
-            
+
             // Confirmar depósito realizado
             depositDoneBtn.addEventListener('click', function() {
                 investModal.style.display = 'none';
                 confirmationModal.style.display = 'flex';
+                
+                // Configurar el contador de 24 horas
+                const now = new Date().getTime();
+                const countdownDuration = 24 * 60 * 60 * 1000; // 24 horas en milisegundos
+                countdownEndTime = now + countdownDuration;
+                localStorage.setItem('countdownEndTime', countdownEndTime);
+                
+                startCountdown(countdownDuration);
             });
-            
+
             // Cerrar modal de confirmación
             closeConfirmation.addEventListener('click', function() {
                 confirmationModal.style.display = 'none';
             });
-            
+
             // Navegación inferior
             navItems.forEach(item => {
                 item.addEventListener('click', function(e) {
@@ -1116,7 +1141,89 @@
                     }
                 });
             });
+
+            // Animación para el botón de referidos
+            const botReferralBtn = document.getElementById('bot-referral-btn');
+            if (botReferralBtn) {
+                setInterval(() => {
+                    botReferralBtn.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        botReferralBtn.style.transform = 'scale(1)';
+                    }, 1000);
+                }, 2000);
+            }
+
+            // Efecto de onda al hacer clic en botones
+            function createRipple(event) {
+                const button = event.currentTarget;
+                const circle = document.createElement('span');
+                const diameter = Math.max(button.clientWidth, button.clientHeight);
+                const radius = diameter / 2;
+                
+                circle.style.width = circle.style.height = `${diameter}px`;
+                circle.style.left = `${event.clientX - button.getBoundingClientRect().left - radius}px`;
+                circle.style.top = `${event.clientY - button.getBoundingClientRect().top - radius}px`;
+                circle.classList.add('ripple');
+                
+                const ripple = button.getElementsByClassName('ripple')[0];
+                if (ripple) {
+                    ripple.remove();
+                }
+                
+                button.appendChild(circle);
+            }
+
+            const buttons = document.querySelectorAll('.cta-button, .crypto-option, .nav-item');
+            buttons.forEach(button => {
+                button.addEventListener('click', createRipple);
+            });
+
+            // Cargar animaciones cuando los elementos son visibles
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.feature-card, .stat-card, .investment-info');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.classList.add('animate__animated', 'animate__fadeInUp');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', animateOnScroll);
+            // Ejecutar una vez al cargar
+            animateOnScroll();
         });
+
+        // Estilo para el efecto ripple
+        const style = document.createElement('style');
+        style.textContent = `
+            .ripple {
+                position: absolute;
+                border-radius: 50%;
+                background-color: rgba(255, 255, 255, 0.7);
+                transform: scale(0);
+                animation: ripple 600ms linear;
+                pointer-events: none;
+            }
+            
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes fadeInOut {
+                0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+                20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
